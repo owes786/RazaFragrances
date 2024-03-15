@@ -1,0 +1,122 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block css %}{% static "css/8.My Orders.css" %}{% endblock css %}
+{% block title %}My Orders{% endblock title %}
+
+{% block OtherContent %}
+  <section style="background-color: whitesmoke;">
+
+    <div class="container Ec-My-Orders-Section">
+
+      <a href="{% url "Profile" %}"><img class="img-fluid Ec-UserProfile" src="{% static "images/user Profile.png" %}" alt=""></a>
+      <small class=" px-1 g-font-Montserrat">Welcome,</small> 
+      <h6 class="text-capitalize d-inline g-font-Montserrat">{{request.user.first_name}}</h6>
+      
+      <hr>
+      
+      <div class="row Ec-My-Order-Row ">
+        <div class="col-md-3 Ec-Desktop-Screen-Size-Profile-links">
+          <button type="button" onclick="window.location.href='{% url "Profile" %}'" class="btn w-100">Profile</button>
+          <button type="button" onclick="window.location.href='{% url "MyAddress" %}'" class="btn w-100">My Address</button>
+          <button type="button" onclick="window.location.href='{% url "AddNewAddress" %}'" class="btn w-100 mt-2">Add new Address</button>
+          <button type="button" onclick="window.location.href='{% url "MyOrders" %}'" class="btn w-100 mt-2 {{ButtonActive}}">My Orders</button>
+          <button type="button" onclick="window.location.href='{% url "MyWishlist" %}'"  class="btn w-100 mt-2">My Wishlist</button>
+          <button type="button" onclick="window.location.href='{% url "MyReviews" %}'" class="btn w-100 mt-2">My Reviews</button>
+          <button type="button" onclick="window.location.href='{% url "ChangePassword" %}'" class="btn w-100 mt-2">Change Password</button>
+        </div>
+
+        <div class="col-md-9">
+          {% if messages %}
+            {% for msg in messages %}
+              <p class="alert alert-{{msg.tags}}">{{msg}}</p>
+            {% endfor %}
+          {% endif %}
+
+          <h6 class="Mobile-Screen-Size-My-Order-Hadding">My Orders,</h6>
+
+          {% if MyOrder %}
+            {% for order in MyOrder %}
+              <div class="row shadow-sm rounded-2 mt-2">
+                <div class="col-md-2 col-4 d-flex align-items-center">
+                  <a href="{% url "ProductDetail" order.Product.id %}">          
+                    <img class="img-fluid pt-2" src="{{order.Product_Image.url}}" alt="">
+                  </a>
+                </div>
+
+                <div class="col-8">
+                  <p class="mt-4 "> <strong>{{order.Title}}</strong> </p>
+                  <p class="text-muted">{{order.OrderDate}}</p>
+                  {% if order.Status == "Shipped"  or order.Status == "Out for Delevery" or order.Status == "Delevered" %}
+                    <p class="text-muted">Tracking id / AWB id : <strong>0123456789 </strong></p>
+                    <p class="d-inline"><strong>info : </strong></p>
+                    <small class="text-muted">Copy AWB id and open this link to check order status.
+                      <a class="d-inline text-primary border-bottom border-primary fw-bold" href="https://www.shiprocket.in/shipment-tracking/" target="blank">Track now</a> <br>
+                    </small> <br>
+                  {% else %}
+                    <p class="text-muted">Order Status : Placed</p>
+                  {% endif %}
+                </div>
+
+              {% comment %} <div class="row mt-3 Ec-Mobile-Screen-Size-Order-Status-Hadding">
+                <div class="col-3">
+                  <p class="float-start Ec-OrderStatus">Placed</p>
+                </div>
+                <div class="col-3">
+                  <p class="Ec-OrderStatus">Shipped</p>
+                </div>
+                <div class="col-3">
+                  <p class="Ec-OrderStatus">Out for Delevery</p>
+                </div>
+                <div class="col-3">
+                  <p class="float-end Ec-OrderStatus">Delevered</p>
+                </div>
+              </div>
+
+              <div class="Ec-Mobile-Screen-Size-OrderStatus-ProgressBar">
+                {% if order.Status == "placed" %}                
+                <div class="progress mb-3 Ec-ProgressBar">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 8%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+                {% elif order.Status == "Shipped" %}
+                  <div class="progress mb-3 Ec-ProgressBar">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 36%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+
+                {% elif order.Status == "Out of Delevery" %}
+                  <div class="progress mb-3 Ec-ProgressBar">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div> 
+
+                {% elif order.Status == "Delevered" %}
+                  <div class="progress mb-3 Ec-ProgressBar">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div> 
+                {% endif %}
+              </div> {% endcomment %}
+                
+                <div class="row border-top pt-2">
+                  <div class="col-6 border-end border-2">
+                    <a href="{% url "OrderDetails" order.id %}" class="text-center mb-3">Order Details</a>
+                  </div>
+                  <div class="col-6">
+                    {% if order.Status == "Delevered" %}
+                      <a href="{% url "UserReview" order.Product.id %}" class="text-center mb-3">Write Review</a>
+                    {% else %}
+                      <a href="#" class="text-center mb-3">Cancel Order</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted d-flex mt-5 pt-5 justify-content-center">My orders is Empty.</p>
+          {% endif %}
+        </div>  
+      </div>
+
+    </div>
+
+  </section>
+{% endblock OtherContent %}
+

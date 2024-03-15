@@ -1,0 +1,53 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block css %}{% static "css/14.Wishlist.css" %}{% endblock css %}
+{% block title %}Product-Details{% endblock title %}
+
+{% block OtherContent %}
+  <section>
+    <div class="container Ec-MyWishlist-Section">
+
+      <a href="{% url "Profile" %}"><img class="img-fluid Ec-UserProfile" src="{% static "images/user Profile.png" %}" alt=""></a>
+      <small class=" px-1 g-font-Montserrat">Welcome,</small> 
+      <h6 class="text-capitalize d-inline g-font-Montserrat">{{request.user.first_name}}</h6> 
+
+      <hr>
+      
+      <div class="row">
+        <div class="col-md-3 Ec-Desktop-Screen-Size-Profile-links">
+          <button type="button" onclick="window.location.href='{% url "Profile" %}'" class="btn w-100">Profile</button>
+          <button type="button" onclick="window.location.href='{% url "MyAddress" %}'" class="btn w-100">My Address</button>
+          <button type="button" onclick="window.location.href='{% url "AddNewAddress" %}'" class="btn w-100 mt-2">Add new Address</button>
+          <button type="button" onclick="window.location.href='{% url "MyOrders" %}'" class="btn w-100 mt-2">My Orders</button>
+          <button type="button" onclick="window.location.href='{% url "MyWishlist" %}'"  class="btn w-100 mt-2 {{WishlistActive}}">My Wishlist</button>
+          <button type="button" onclick="window.location.href='{% url "MyReviews" %}'" class="btn w-100 mt-2">My Reviews</button>
+          <button type="button" onclick="window.location.href='{% url "ChangePassword" %}'" class="btn w-100 mt-2">Change Password</button>
+        </div>
+
+        <div class="col-md-9">
+          <h6 class="Ec-My-wishlist-hadding">My wishlist,</h6>
+          <div class="row">
+            {% if Wishlist_items %}
+              {% for item in Wishlist_items %}          
+                <div class="col-md-3 col-6 pt-3 pb-3 px-3 rounded-2 Ec-Product">
+                  <a href="{% url "RemoveWishlistItem" item.id %}" class="text-decoration-none float-end btn text-muted mb-2">remove</a>
+                  <a href="{% url "ProductDetail" item.Product.id %}" class="text-decoration-none text-dark">
+                    <img class="img-fluid" src="{{item.Product.Product_Image.url}}" alt="">
+                    <p class="mt-3 text-muted">{{item.Product.Title}}</p>
+                    <p class="d-inline">₹ {{item.Product.Selling_Price}}</p> 
+                    <p class="d-inline text-decoration-line-through text-muted px-2">{{item.Product.Mrp}}</p>
+                  </a>
+                </div>
+              {% endfor %}
+              {% else %}
+            <p class="text-muted d-flex mt-5 pt-5 justify-content-center">My wishlist is empty.</p>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+{% endblock OtherContent %}
+

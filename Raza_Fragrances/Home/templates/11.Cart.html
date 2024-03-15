@@ -1,0 +1,91 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block css %}{% static "css/11.Cart.css" %}{% endblock css %}
+{% block title %}Cart{% endblock title %}
+
+{% block OtherContent %}
+  <div class="container mt-5 mb-5 ">
+
+    <div class="row mt-5 pt-5">
+      <div class="col-md-8 g-5">
+        
+        <div class="px-4 rounded-2 shadow">
+          <p class="g-font-Montserrat pt-3 fw-bold">SHOPPING CART</p>
+          <hr>
+
+          {% for item in Cart_item %}
+            <div class="row pt-3">
+              <div class="col-md-3 col-5 d-flex align-items-center Ec-Cart-Product-image">
+                <a href="{% url "ProductDetail" item.Product.id %}">
+                  <img class="img-fluid text-center rounded-2 Ec-Product-image" src="{{item.Product.Product_Image.url}}" alt="">
+                </a>  
+              </div>
+              <div class="col-md-6 col-7 Cart-Product-title">
+                <p class="Ec-Product-Title">{{item.Product.Title}}</p>
+                <p class="text-muted Ec-Brand-Text">Brand : {{item.Product.Brand}}</p>
+                <p class="text-muted Ec-Category">Category : {{item.Product.Category}}</p>
+                <p class="Ec-Mobile-Size-Product-Price"><strong>₹ {{item.Product.Selling_Price}}</strong></p>                
+                <p class="Ec-Desktop-size-Quantity-buttons">
+                  {% comment %} Quantiry buttons {% endcomment %}
+                  <a class="text-dark btn minus-button" pid="{{item.Product.id}}"><i class="fa-solid fa-minus Ec-minus-Button"></i></a>
+                  <span class="px-4 fw-bold">{{item.quantity}}</span> 
+                  <a class="text-dark btn Plus-button" pid="{{item.Product.id}}" ><i class="fa-solid fa-plus Ec-Plus-Button"></i></a> 
+                </p>
+              </div>
+
+              
+              <div class="Ec-Mobile-Size-Quantity-remove-buttons">{% comment %} for mobile screen size {% endcomment %}
+                <p class="border rounded-3 Ec-Mobile-Size-Quantity-button">
+                  {% comment %} Quantiry buttons {% endcomment %}
+                  <a class="text-dark btn minus-button" pid="{{item.Product.id}}"><i class="fa-solid fa-minus Ec-minus-Button"></i></a>
+                  <span class="px-3 pt-3">{{item.quantity}}</span> 
+                  <a class="text-dark btn Plus-button" pid="{{item.Product.id}}" ><i class="fa-solid fa-plus Ec-Plus-Button"></i></a>
+                  <a class="text-dark btn float-end Ec-Product-remove-button" href="{% url "RemoveCartItem" item.id %}" ><i class="fa-solid fa-trash"></i></a>
+
+                </p>
+              </div>{% comment %} for mobile screen size {% endcomment %}
+                
+
+              {% comment %} Desktop Size price and Remove buttons {% endcomment %}
+              <div class="col-3 Ec-Desktop-Product-price-remove-button">
+                <p class="mb-2 text-center Ec-Product-Price"><strong>₹ {{item.Product.Selling_Price}}</strong></p>
+                <a href="{% url "RemoveCartItem" item.id %}" class="btn btn-dark pb-2 mt-2 Ec-Product-remove-button w-100">remove</a>
+              </div>
+            </div>
+            <hr class="mt-3 mb-3">
+            {% endfor %}
+            
+        </div>
+      </div>
+
+
+      <!-- Order Summerty column -->
+      <div class="col-md-4 g-5 pt-3 rounded-2 shadow Ec-Product-price-column">
+        <div class="contianer">
+          <header>
+              <p class="g-font-Montserrat fw-bold Ec-Order-summery-text">ORDER SUMMERY</p>
+              <hr>
+              <p class="d-inline">Price ({{items}}) items</p> <span class="float-end">₹ <span id="amount">{{amount}}</span> </span> <br> <br>  
+              <p class="d-inline">Shipping Charge</p> <span class="float-end">Free</span> <br> <br>
+              <strong class="d-inline">Total Amount</strong> <strong class="float-end">₹ <span id="totalamount">{{Total_amount}}</span></strong>
+          </header>
+          <footer class="Ec-footer">
+              <hr>
+              <button class="btn btn-dark w-100 pt-2 pb-2 g-font-Montserrat" onclick="Checkout()">Checkout</button>
+          </footer>    
+        </div>
+        <p class="text-muted mt-4 pt-1">100% Secured payment and original products.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function Checkout(){
+      window.location.href = "{% url "Checkout" %}"
+    }
+  </script>
+
+{% endblock OtherContent %}
+
+{% block bottombar %}{% endblock bottombar %}

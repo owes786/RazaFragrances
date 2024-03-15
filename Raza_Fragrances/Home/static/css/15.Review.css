@@ -1,0 +1,22 @@
+.Ec-Review-Section{
+    margin-top: 145px;
+}
+
+.Ec-Review-Textarea{
+    outline: none;
+    border: none;
+    border: 1px solid silver;
+    border-radius: 3px;
+    background-color: transparent;
+}
+
+::placeholder{
+    padding: 3px 5px;
+}
+
+@media only screen and (max-width : 500px){
+    .Ec-Desktop-Screen-Size-Profile-links{
+        display: none;
+    }
+    
+}

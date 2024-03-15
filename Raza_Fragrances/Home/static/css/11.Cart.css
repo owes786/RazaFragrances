@@ -1,0 +1,153 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body,html{
+    background-color: whitesmoke;
+}
+
+.Cart-Product-title{
+    font-size: 100%;
+    margin: auto;
+}
+
+.Ec-Product-Price{
+    font-size: 90%;
+    margin: auto;
+}
+
+.Ec-Product-remove-button{
+    font-size: 80%;
+    margin: auto;
+}
+
+.Ec-Quantity-Select{
+    font-size: 95%;
+}
+
+.Ec-Desktop-Product-price-remove-button{
+    margin: auto;
+    font-size: 18px;
+}
+
+.Ec-Product-price{
+    margin: auto;
+    font-size: 18px;
+}
+
+.Ec-Product-price-column{
+    height: 280px;
+}
+
+.Ec-Cart-padding{
+    margin-top: 140px;
+}
+
+.Ec-Cart-Product-image{
+    margin-bottom: 1.8rem;
+}
+
+.Ec-Desktop-size-Quantity-buttons{
+    display: inline;
+    padding: 5px 0px;
+    border: 1px solid gray;
+    border-radius: 7px;
+}
+
+.Ec-Plus-Button{
+    font-size: 120%;
+    cursor: pointer;
+}
+
+.Ec-minus-Button{
+    font-size: 120%;
+    cursor: pointer;
+}
+
+.Ec-Mobile-Size-Product-Price{
+    display: none;
+}
+
+.Ec-Mobile-Size-Quantity-button{
+    display: none;
+}
+
+.Ec-Mobile-Size-Quantity-remove-buttons{
+    display: none;
+}
+
+.Ec-Mobile-Size-Product-Remove-button{
+    display: none;
+}
+
+
+@media only screen and (max-width : 500px){
+
+    .Ec-Shopping-text{
+        font-size: 100%;
+    }
+
+    .Ec-Order-summery-text{
+        font-size: 100%;
+    }
+
+    .Ec-Cart-Product-image{
+        margin-bottom: 1rem;
+    }
+
+    .Ec-Shopping-Cart{
+        font-size: 100%;
+    }
+
+    .Cart-Product-title{
+        font-size: 70%;
+    }
+
+    .Ec-Brand-Text{
+        font-size: 90%;
+    }
+
+    .Ec-Product-price{
+        font-size: 12px;
+    }
+
+    .Ec-Plus-Button{
+        font-size: 80%;
+        cursor: pointer;
+    }
+    
+    .Ec-minus-Button{
+        font-size: 80%;
+        cursor: pointer;
+    }
+
+    .Ec-Category{
+        display: none;
+    }
+
+    .Ec-Mobile-Size-Product-Price{
+        display: block;
+    }
+
+    .Ec-Desktop-size-Quantity-buttons{
+        display: none;
+    }
+
+    .Ec-Mobile-Size-Quantity-button{
+        display: block;
+    }
+
+    .Ec-Mobile-Size-Quantity-remove-buttons{
+        display: block;
+    }
+
+    .Ec-Desktop-Product-price-remove-button{
+        display: none;
+    }
+    
+    .Ec-Mobile-Size-Product-Remove-button{
+        display: block;
+    }
+
+}

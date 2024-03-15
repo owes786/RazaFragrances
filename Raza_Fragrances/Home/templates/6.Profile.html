@@ -1,0 +1,79 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block css %}{% static "css/6.Profile.css" %}{% endblock css %}
+{% block title %}Profile{% endblock title %}
+
+{% block OtherContent %}
+  <section style="background-color: whitesmoke;">
+
+    <div class="container Ec-Address-Card-Section">
+
+      <a href="{% url "Profile" %}"><img class="img-fluid Ec-UserProfile" src="{% static "images/user Profile.png" %}" alt=""></a>
+      <small class=" px-1 g-font-Montserrat">Welcome,</small> 
+      <h6 class="text-capitalize d-inline g-font-Montserrat">{{request.user.first_name}}</h6> 
+
+      <hr>
+      
+      <div class="row">
+        <div class="col-md-3 Ec-Desktop-Screen-Size-Profile-links">
+          <button type="button" onclick="window.location.href='{% url "Profile" %}'" class="btn w-100">Profile</button>
+          <button type="button" onclick="window.location.href='{% url "MyAddress" %}'" class="btn w-100 {{ButtonActive}}">My Address</button>
+          <button type="button" onclick="window.location.href='{% url "AddNewAddress" %}'" class="btn w-100 mt-2">Add new Address</button>
+          <button type="button" onclick="window.location.href='{% url "MyOrders" %}'" class="btn w-100 mt-2">My Orders</button>
+          <button type="button" onclick="window.location.href='{% url "MyWishlist" %}'"  class="btn w-100 mt-2">My Wishlist</button>
+          <button type="button" onclick="window.location.href='{% url "MyReviews" %}'" class="btn w-100 mt-2">My Reviews</button>
+          <button type="button" onclick="window.location.href='{% url "ChangePassword" %}'" class="btn w-100 mt-2">Change Password</button>
+        </div>
+
+        <div class="col-md-9 col-12 pt-2">
+
+          {% if messages %}
+            {% for msg in messages %}
+              <p class="alert alert-{{msg.tags}}">{{msg}}</p>
+            {% endfor %}
+          {% endif %}
+
+          <h6 class="mb-3 Ec-My-address-hadding">My address,</h6>
+
+          {% if UserAddressData %}
+            {% if request.user.is_authenticated %}
+              <div class="row">
+                {% for data in UserAddressData %} 
+                  <div class="col-6">
+                    <div class="card shadow-sm border-0 mb-4">
+                      <div class="card-body" style="background-color:whitesmoke;">
+                        <div class="d-inline fw-bold">{{data.Name}}</div> 
+                        
+                        <span="Ec-delete-link">
+                          <a class="float-end text-decoration-none text-dark" title="Delete" href="{% url "DeleteAddress" data.id%}">Delete</a>
+                          <a class="float-end text-decoration-none text-dark px-4" title="Edit" href="{% url "EditAddress" data.id%}">Edit</a>
+                        </span>
+    
+                        <hr>
+                        <p class="d-inline">+{{data.Mobile_Number}}</p>
+                        <p class="d-inline">( {{data.State}} ), </p>
+                        <p class="d-inline">{{data.City}}, </p>
+                        <p class="d-inline pb-5">{{data.Pincode}}</p> 
+                        <p>{{data.Address}}</p>
+                        <p>{{data.Landmark}}</p>
+                        <div class="form-check mt-2">
+                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                          <label class="form-check-label" style="cursor:pointer;" for="exampleRadios1">
+                          Address {{forloop.counter}}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% else %}
+                <p class="text-muted d-flex mt-5 pt-5 justify-content-center">No address here.</p>
+          {% endif %}
+      </div>
+
+    </div>
+
+  </section>
+{% endblock OtherContent %}

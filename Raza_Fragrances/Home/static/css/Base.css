@@ -1,0 +1,337 @@
+.tracking-in-contract-bck {
+	-webkit-animation: tracking-in-contract-bck 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+	        animation: tracking-in-contract-bck 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+}
+
+ @-webkit-keyframes tracking-in-contract-bck {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(400px);
+            transform: translateZ(400px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+}
+@keyframes tracking-in-contract-bck {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(400px);
+            transform: translateZ(400px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+}
+
+/* ----------------------- */
+
+.heartbeat {
+	-webkit-animation: heartbeat 2s ease-in-out infinite both;
+	        animation: heartbeat 2s ease-in-out infinite both;
+}
+
+ @-webkit-keyframes heartbeat {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  10% {
+    -webkit-transform: scale(0.91);
+            transform: scale(0.91);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  17% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  33% {
+    -webkit-transform: scale(0.87);
+            transform: scale(0.87);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  45% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+}
+@keyframes heartbeat {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  10% {
+    -webkit-transform: scale(0.91);
+            transform: scale(0.91);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  17% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  33% {
+    -webkit-transform: scale(0.87);
+            transform: scale(0.87);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  45% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+}
+
+
+/* -------------------------------------------------------------------------------------------------------------- */
+
+
+
+/* Custom Scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 20px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+
+::selection{
+  background-color: black;
+  color: whitesmoke;
+}
+
+.inika{
+  font-family: 'Inika', serif;
+}
+
+.g-font-Montserrat{
+  font-family: 'Montserrat', sans-serif;
+}
+
+.Cursive{
+  font-family: 'Carattere', cursive;
+}
+
+body{
+  background-color: whitesmoke;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.Ec-Raza_Fragrances{
+  letter-spacing: 10px;
+  font-size: 19px;
+  text-align: center;
+  padding: 5px 0px;
+  display: block;
+  text-decoration: none;
+}
+
+.EC-nav{
+  padding: 0px;
+  margin: 0px;
+}
+
+.Ec-nav-link{
+  letter-spacing: 3px;
+  font-size: 14px;
+}
+
+.Ec-Shop, .Ec-About{
+  margin-left: 20px;
+}
+
+
+.Ec-ProductSearchBar{
+  padding: 16px 14px;
+  padding-bottom: 18px;
+  height: 30px;
+  width: 235px;
+  border-radius: 12px;
+  outline: none;
+  border: 1px solid silver;
+}
+
+.Ec-Search-icon{
+  margin-left: 207px;
+  margin-top: 2px;
+}
+
+.Ec-ProductSearchBar:focus{
+  outline: none;
+}
+
+.Ec-userProfile{
+  width: 25px;
+  cursor: pointer;
+}
+
+.Ec-Product-Cart-Quantity{
+  border-radius: 50%;
+  padding: 2px 0;
+}
+
+.Ec-Shopping-Cart{
+  width: 1.65rem;
+  cursor: pointer;
+}
+
+
+.Ec-BottomContainer{
+  background-color: rgba(0, 0, 0, 0.902);
+  color: whitesmoke;
+}
+
+
+.Ec-Brand-copyright-text{
+  color: rgba(245, 245, 245, 0.731);
+  font-size: 12px;
+}
+
+
+.Ec-bottom-link{
+  color: rgba(245, 245, 245, 0.548);
+  font-size: 13.7px;
+}
+
+.Ec-bottom-link:hover{
+  color: gray;
+}
+
+.Ec-bottom-hadding{
+  color: rgba(245, 245, 245, 0.854);
+}
+
+.Ec-mobile-screen-size-nav-items{
+  display: none;
+}
+
+.Ec-Mobile-Screen-Size-User-icon-Name{
+  display: none;
+}
+
+
+.Ec-Mobile-Screen-Size-Menu-links{
+  display: none;
+}
+
+
+.Ec-Mobile-Screen-Size-Navbar{
+  width: 90%;
+}
+  
+@media only screen and (max-width : 500px){
+  .Ec-Raza_Fragrances{
+    font-size: 16px;
+  }
+
+  .Ec-mobile-screen-size-nav-items{
+    display: block;
+  }
+
+  .Ec-Desktop-Menu-links{
+    display: none;
+  }
+
+  .Ec-Mobile-Screen-Size-User-icon-Name{
+    display: block;
+  }
+
+  .Ec-Mobile-Screen-Size-Menu-links{
+    display: block;
+  }
+
+  .Ec-nav-link{
+    margin: 0%;
+    padding: 0%;
+    margin-bottom: 20px;
+  }
+
+  .Ec-Mobile-Screen-Size-Logout-button{
+    bottom: 0;
+    top: 100%;
+  }
+
+  .Ec-Desktop-Screen-Size-Logout-button{
+    display: none;
+  }
+
+  .Ec-Mobile-Screen-Size-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 85%;
+    background-color: white;
+    color: white;
+    border-top: 1px solid gray;
+  }
+
+  .Ec-Mobile-Screen-Size-Raza_Fragrances{
+    letter-spacing: 4px;
+    font-size: 19px;
+    text-align: center;
+    padding: 5px 0px;
+    display: block;
+  }
+
+  .Ec-Navbar{
+    margin: 0%;
+    padding: 0%;
+  }
+
+  .Ec-Mobile-Screen-Size-Search-icon{
+    font-size: 1.2rem;
+  }
+
+}
+

@@ -1,0 +1,57 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block css %}{% static "css/2.Signup.css" %}{% endblock css %}
+{% block title %}Sign up{% endblock title %}
+
+{% block OtherContent %}
+    
+  <div class="container mb-5 shadow Ec-Login-page">
+
+
+    <h4 class="text-center g-font-Montserrat Ec-Login-hadding">Create Account</h4>
+    {% if messages %}
+      {% for msg in messages %}
+        <p class="alert alert-success text-center">{{msg}}</p>
+      {% endfor %}
+    {% endif %}
+
+
+    <form method="POST" novalidate>
+      {% csrf_token %}
+      <div class="mb-3 px-3">
+        <i class="fa-solid fa-user position-absolute mt-3 pt-2 Ec-icon"></i>
+        {{form.first_name}}
+        <p class="text-danger pt-1">{{form.first_name.errors|striptags}}</p> 
+      </div>
+
+
+      <div class="mb-3 px-3">
+        <i class="fa-solid fa-envelope position-absolute Ec-icon Ec-email-icon"></i>
+        {{form.email}}
+        {% comment %} <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> {% endcomment %}
+        <p class="text-danger pt-1">{{form.email.errors|striptags}}</p>
+      </div>
+
+
+
+      <div class="mb-3 px-3">
+        <i class="fa-solid fa-lock position-absolute mt-3 pt-2 Ec-icon"></i>
+        {{form.password1}}
+        <p class="text-danger pt-1">{{form.password1.errors|striptags}}</p>
+      </div>
+
+      <div class="mb-3 px-3">
+        <i class="fa-solid fa-lock position-absolute mt-3 pt-2 Ec-icon"></i>
+        {{form.password2}}
+        <p class="text-danger pt-1">{{form.password2.errors|striptags}}</p>
+      </div>
+
+      
+      <p class="Ec-text-white px-3">I have an existing Account <a class="fw-bold" href="{% url "Login" %}">Login</a></p>
+      <button type="submit" class="btn btn-dark w-100 mt-3 mb-5 px-3">Create Now</button>
+    </form>
+  </div>
+
+{% endblock OtherContent %}
+
+{% block bottombar %}{% endblock bottombar %}

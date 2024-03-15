@@ -1,0 +1,166 @@
+::selection{
+    background-color: black;
+    color: whitesmoke;
+}
+
+.Ec-ProductDetailContainer{
+    padding-top: 160px;
+}
+
+.Ec-Product{
+    overflow: hidden;
+    transition: .3s;
+}
+
+.Ec-Product:hover{
+    transform: scale(1.1);
+}
+
+.Ec-Product-image{
+    transition: .3s;
+}
+
+.Ec-Product-image:hover{
+    transform: scale(1.1);
+}
+
+.Ec-ProductImage{
+    max-width: 60%;
+    cursor: pointer;
+}
+
+.Ec-Wishlist-icon{
+    width: 50px;
+    position: absolute;
+    top: 26%;
+}
+
+.Ec-Products{
+    padding-left: 50px;
+    padding-top: 20px;
+}
+
+.Ec-ProductTitle{
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.Ec-Brand-Text{
+    font-size: 1rem;
+}
+
+.Ec-ProductMrp{
+    font-size: 16px;
+    text-decoration: line-through;
+    color: red;
+}
+
+.Ec-ProductPrice{
+    font-size: 19px;
+    font-weight: 500;
+    padding-right: 10px;
+}
+
+.Ec-ProductDescription{
+    padding-top: 60px;
+    padding-bottom: 20px;
+}
+
+.Ec-Review-Section{
+    max-height: 600px;
+    overflow: hidden;
+}
+
+.Ec-Review-Text{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.Ec-button{
+    margin-right: 23px;
+    width: 42%;
+    text-align: center;
+}
+
+
+@media only screen and (max-width : 500px){
+
+    .Ec-ProductDetailContainer{
+        padding-top: 140px;
+    }
+
+    .Ec-ProductTitle{
+        margin-top: 15px;
+        font-size: 115%;
+        font-weight: 500;
+    }
+
+    .Ec-Products{
+        padding: 5px;
+    }
+
+    .Ec-Brand-Text{
+        font-size: 80%;
+    }
+
+    .Ec-ProductPrice{
+        font-size: 100%;
+    }
+
+    .Ec-ProductMrp{
+        font-size: 80%;
+    }
+
+    .Ec-ProductDescription{
+        font-size: 90%;
+        padding: 0 0px;
+        margin-top: 50px;
+    }
+
+    .Ec-Description-Text{
+        /* font-size: 90%; */
+        margin-top: 10px;
+    }
+
+    .Ec-button{
+        font-size: 70%;
+        width: 97%;
+        margin-bottom: 10px;
+        margin-left: 4px;
+    }
+
+    .Ec-Wishlist-icon{
+        top: 17%;
+    }
+
+    .Ec-Bottom-Product_Title{
+        font-size: 100%;
+    }
+
+    .Ec-Explore-Fragrance-Hadding{
+        font-size: 90%;
+    }
+
+    .Ec-Customer-Review-hadding{
+        font-size: 100%;
+    }
+
+    .Ec-Write-review-link{
+        font-size: 85%;
+    }
+
+    .Ec-Bottom-Product_Title{
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        font-size: 90%;
+    }
+
+    .Ec-See-all-reviews-hadding{
+        font-size: 90%;
+    }
+    
+}

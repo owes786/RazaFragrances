@@ -1,0 +1,30 @@
+.Ec-My-Review-Section{
+    margin-top: 145px;
+}
+
+.Ec-My-Review-Button{
+    width: 95%;
+}
+
+.Ec-Mobile-Screen-Size-MyReviews{
+    display: none;
+}
+
+.Ec-My-reviews-hadding{
+    display: none;
+}
+
+@media only screen and (max-width : 500px){
+    .Ec-Desktop-Screen-Size-MyReviews{
+        display: none;
+    }
+
+    .Ec-Mobile-Screen-Size-MyReviews{
+        display: contents;
+    }
+
+    .Ec-My-reviews-hadding{
+        display: block;
+    }
+    
+}

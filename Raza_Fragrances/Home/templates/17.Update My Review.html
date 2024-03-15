@@ -1,0 +1,47 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block title %}Review{% endblock title %}
+{% block css %}{% static "css/15.Review.css" %}{% endblock css %}
+{% block OtherContent %}
+
+  <div class="container Ec-Review-Section">
+
+    <a href="{% url "Profile" %}"><img class="img-fluid Ec-UserProfile" src="{% static "images/user Profile.png" %}" alt="" style="width:45px;"></a>
+    <small class=" px-1 g-font-Montserrat">Welcome,</small> 
+    <h6 class="text-capitalize d-inline g-font-Montserrat">{{request.user.first_name}}</h6> 
+
+    <hr>
+    
+    <div class="row">
+      <div class="col-md-3">
+          <div class="border-end">
+              <a href="{% url "Profile" %}" class="btn w-100">Profile</a>
+              <a href="{% url "MyAddress" %}" class="btn w-100">My Address</a>
+              <a href="{% url "AddNewAddress" %}" class="btn w-100 mt-2">Add new Address</a>
+              <a href="{% url "MyOrders" %}" class="btn w-100 mt-2">My Orders</a>
+              <a href="{% url "MyWishlist" %}" class="btn w-100 mt-2">My Wishlist</a>
+              <a href="{% url "MyReviews" %}" class="btn w-100 mt-2">My Reviews</a>
+              <a href="{% url "ChangePassword" %}" class="btn w-100 mt-2">Change Password</a>
+          </div>
+      </div>
+
+      <div class="col-md-9">
+          <h5>Update Review.</h5>
+          {% if messages %}
+            {% for msg in messages %}
+              <p class="text-center mt-4 alert alert-{{msg.tags}}">{{msg}}</p>
+            {% endfor %}
+          {% endif %}
+          
+          <form action="#" method="POST" novalidate>
+            {{form}}
+            {% csrf_token %}
+            <button type="Submit" class="btn btn-dark w-100 mt-3">Save</button>
+          </form>
+      </div>
+      
+    </div>
+        
+  </div>
+
+{% endblock OtherContent %}

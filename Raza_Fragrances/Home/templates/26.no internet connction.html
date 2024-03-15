@@ -1,0 +1,13 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block title %}Connection lost{% endblock title %}
+{% block Navbar %}{% endblock Navbar %}
+{% block OtherContent %}
+    <div class="text-center mt-5 pt-5">
+        <img class="img-fluid mb-4 mt-5 pt-3" width="12%" src="{% static "images/no-wifi.png" %}" alt="">
+        <h4 class="g-font-Montserrat">Connection lost !</h4>
+        <p class="g-font-Montserrat">You are offline</p>
+        <button onclick="window.location.href='{% url "Home" %}'" class="btn btn-dark">Back to home</button>
+    </div>
+{% endblock OtherContent %}
+{% block bottombar %}{% endblock bottombar %}

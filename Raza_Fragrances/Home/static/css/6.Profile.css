@@ -1,0 +1,27 @@
+.Ec-Address-Card-Section{
+    padding-top: 145px;
+}
+
+.Ec-UserProfile{
+    width: 45px;
+    cursor: pointer;
+}
+
+.Ec-delete-link{
+    float: inline-end;
+}
+
+.Ec-My-address-hadding{
+    display: none;
+}
+
+
+@media only screen and (max-width : 700px){
+    .Ec-Desktop-Screen-Size-Profile-links{
+        display: none;
+    }
+    
+    .Ec-My-address-hadding{
+        display: block;
+    }
+}

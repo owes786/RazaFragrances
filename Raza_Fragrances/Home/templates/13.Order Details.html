@@ -1,0 +1,49 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block css %}{% static "css/13.Order Details.css" %}{% endblock css %}
+{% block title %}Order Details{% endblock title %}
+
+{% block OtherContent %}
+    <section class="Ec-MyOrders-Section" style="background-color: whitesmoke;">
+        <div class="container Ec-My-Orders-Section">
+    
+            <a href="{% url "Profile" %}"><img class="img-fluid Ec-UserProfile" src="{% static "images/user Profile.png" %}" alt=""></a>
+            <small class=" px-1 g-font-Montserrat">Welcome,</small> 
+            <h6 class="text-capitalize d-inline g-font-Montserrat">{{request.user.first_name}}</h6> 
+      
+            <hr>
+
+            <div class="row">
+                <div class="col-md-5 px-3 Ec-Address-Details">
+                    <p class="fw-bold">Shipping Address</p>
+                    <hr>
+                    <p>{{ProductDetails.Name}}</p>
+                    <p class="text-muted"> +91 {{ProductDetails.Mobile_Number}},</p>
+                    <p class="text-muted">( {{ProductDetails.State}} ), {{ProductDetails.City}}, {{ProductDetails.Pincode}}</p>
+                    <p class="text-muted">{{ProductDetails.Address}}</p>
+                    <p class="text-muted">Landmark : {{ProductDetails.Landmark}}</p>
+                </div>
+
+                <div class="col-md-7 Ec-Payment-Details">
+                    <p class="fw-bold">Amount Details</p>
+                    <hr>
+                    <p class="fw-bold">{{ProductDetails.Title}}</p>
+                    <p>MRP <span class="float-end text-decoration-line-through">₹{{ProductDetails.Mrp}}</span></p>
+                    <p>Selling Price <span class="float-end">₹{{ProductDetails.Selling_Price}}</span> </p>
+                    <p>Product Quantity <span class="float-end">{{ProductDetails.Quantity}}</span> </p>
+                    <p>Shipping Charges <span class="float-end">Free</span> </p>
+                    {% if ProductDetails.Razorpay_Order_id or ProductDetails.Razorpay_Payment_id %}                    
+                        <p>Order id <span class="float-end">{{ProductDetails.Razorpay_Order_id}}</span></p>
+                        <p>Payment id <span class="float-end">{{ProductDetails.Razorpay_Payment_id}}</span></p>
+                    {% endif %}
+                    <p>Payment Type <span class="float-end"> <strong>{{Determine}}</strong> </span></p>
+                    <p>Order Date <span class="float-end">{{ProductDetails.OrderDate}}</span></p>
+                    <hr>
+                    <p> <strong>Total <span class="float-end">₹{{ProductDetails.Total_Amount}}</strong></span> </p>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+{% endblock OtherContent %}

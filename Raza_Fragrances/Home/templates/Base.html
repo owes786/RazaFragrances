@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static "images/Raza Fragrances logo.png" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/Font Awesome all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/Base.css" %}">
+    <link rel="stylesheet" href="{% block css %}{% endblock css %}">
+    <script src="{% static "js/jquary.js" %}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Carattere&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>RAZA FRAGRANCES | {% block title %}{% endblock title %}</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inika&display=swap');
+        
+      /* Back to top button */
+      #btn-back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: none;
+      }
+    </style>
+    
+</head>
+<body>
+  {% block Navbar %}
+    <!-- Navbar Section -->
+    <section> 
+      <div class="container-fluid bg-light fixed-top">
+        <a href="{% url "Home" %}" class="inika text-dark border-bottom Ec-Raza_Fragrances">RAZA FRAGRANCES</a>
+
+        <nav class="navbar navbar-expand-md navbar-light bg-light pb-3 mt-3 border-bottom EC-nav">
+          <div class="container Ec-Navbar">
+            <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+              {% comment %} <span class="navbar-toggler-icon"></span> {% endcomment %}
+              <img src="{% static "images/list.png" %}" width="35px" alt="">
+            </button>
+            <div class="offcanvas offcanvas-start bg-light Ec-Mobile-Screen-Size-Navbar" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+              <div class="offcanvas-header">
+                <p class="offcanvas-title inika Ec-Mobile-Screen-Size-Raza_Fragrances" id="offcanvasNavbarLabel"><a class="text-decoration-none text-dark" href="{% url "Home" %}">RAZA FRAGRANCES</a></p>
+                <button type="button" class="btn" data-bs-dismiss="offcanvas" aria-label="Close">
+                  <img src="{% static "images/right-arrow.png" %}" width="20px" alt="">
+                </button>
+              </div>
+
+              <div class="offcanvas-body">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 Ec-Desktop-Menu-links"> {% comment %} For Desktop Screen size {% endcomment %}
+                  <li class="nav-item">
+                    <a class="nav-link inika Ec-nav-link Ec-Home {{HomeActive}}" aria-current="page" href="{% url "Home" %}">HOME</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link inika Ec-nav-link Ec-Shop {{FragranceActive}}" href="{% url "Fragrance" %}">FRAGRANCE</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link inika Ec-nav-link Ec-About  {{AboutUsActive}}" href="{% url "AboutUs" %}">ABOUT US</a>
+                  </li>
+                </ul> {% comment %} For Desktop Screen size {% endcomment %}
+
+                <header class="mb-4 pb-2 Ec-Mobile-Screen-Size-User-icon-Name">
+                  <a href="{% url "Profile" %}"><img class="img-fluid Ec-UserProfile" width="45px" src="{% static "images/user Profile.png" %}" alt=""></a>
+                  <h6 class="text-capitalize d-inline px-2">{{request.user.first_name}}</h6>
+                </header>
+                <div class="mx-2">
+                  {% comment %} For Mobile Screen Size {% endcomment %}
+                  <ul class="navbar-nav me-auto mb-lg-0 Ec-Mobile-Screen-Size-Menu-links">
+
+                    {% if not request.user.is_authenticated %}
+                      <h6 class="mb-4">
+                        <a class="d-block text-decoration-none text-dark" href="{% url "Login" %}">Login
+                          <img class="mx-2 float-end mx-4" src="{% static "images/right-arrow.png" %}" width="12px" alt="">
+                        </a>
+                      </h6>
+                    {% endif %}
+
+                    <h6 class="d-block mb-4 pb-2">
+                      <a class="text-decoration-none text-dark" href="{% url "FragrancePage" "All"%}">Shop by Category
+                        <img class="float-end mx-3" src="{% static "images/right-arrow.png" %}" width="12px" alt="">
+                      </a>
+                    </h6>
+
+                    <div class="mb-4">
+                      <div class="row mb-4">
+                        <div class="col-6">
+                          <a href="{% url "FragrancePage" "Perfume" %}" class="text-decoration-none text-dark">Perfume 
+                            <i class="fa-solid fa-arrow-right mx-4 text-muted"></i>
+                          </a>
+                        </div>
+                        <div class="col-6">
+                          <a href="{% url "FragrancePage" "Attar" %}" class="text-decoration-none text-dark">Attar
+                            <i class="fa-solid fa-arrow-right mx-4 text-muted"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">
+                          <a href="{% url "FragrancePage" "Deodent" %}" class=" text-decoration-none text-dark">Deodent <i class="fa-solid fa-arrow-right mx-4 text-muted"></i></a>
+                        </div>
+                        <div class="col-6">
+                          <a href="{% url "FragrancePage" "All" %}" class=" text-decoration-none text-dark">View all <i class="fa-solid fa-arrow-right mx-4 text-muted"></i></a>
+                        </div>
+                      </div>
+
+                    </div>
+                    
+                    {% if request.user.is_authenticated %}
+                      <div class="mt-5">
+                        <h6 class="border-top border-bottom pt-3 pb-3">
+                          <a class="d-block mb-2 text-decoration-none text-dark" href="{% url "Profile" %}">Profile
+                            <img class="mx-2 float-end mx-3" src="{% static "images/right-arrow.png" %}" width="12px" alt="">
+                          </a> 
+                        </h6>
+                        <h6 class="border-bottom pt-3 pb-3">
+                          <a class="d-block text-decoration-none text-dark mb-2" href="{% url "MyAddress" %}">My address
+                            <img class="mx-2 float-end mx-3" src="{% static "images/right-arrow.png" %}" width="12px" alt="">
+                          </a>
+                        </h6>
+                        <h6 class="border-bottom pt-3 pb-3">
+                          <a class="d-block text-decoration-none text-dark mb-2" href="{% url "AddNewAddress" %}">Add new address
+                            <img class="mx-2 float-end mx-3" src="{% static "images/right-arrow.png" %}" width="12px" alt="">
+                          </a>
+                        </h6>
+                        <h6 class="border-bottom pt-3 pb-3">
+                          <a class="d-block text-decoration-none text-dark mb-2" href="{% url "MyOrders" %}">My Orders
+                            <img class="mx-2 float-end mx-3" src="{% static "images/right-arrow.png" %}" width="12px" alt="">
+                          </a>
+                        </h6>
+                        <h6 class="border-bottom pt-3 pb-3">
+                          <a class="d-block text-decoration-none text-dark mb-2" href="{% url "MyWishlist" %}">My Wishlist
+                            <img class="mx-2 float-end mx-3" src="{% static "images/right-arrow.png" %}" width="12px" alt="">
+                          </a> 
+                        </h6>
+                        <h6 class="border-bottom pt-3 pb-3">
+                          <a class="d-block text-decoration-none text-dark mb-2" href="{% url "MyReviews" %}">My Reviews
+                            <img class="mx-2 float-end mx-3" src="{% static "images/right-arrow.png" %}" width="12px" alt="">
+                          </a> 
+                        </h6>
+                        <h6 class="pt-3 pb-3">
+                          <a class="d-block text-decoration-none text-dark mb-5" href="{% url "ChangePassword" %}">Change Password
+                            <img class="mx-2 float-end mx-3" src="{% static "images/right-arrow.png" %}" width="12px" alt="">
+                          </a> 
+                        </h6>
+                      </div>
+                    
+                    {% endif %}
+
+                    {% if request.user.is_authenticated %}                    
+                      <footer class="pt-3 pb-3 bg-light Ec-Mobile-Screen-Size-footer">
+                        <a class="text-decoration-none text-dark d-block mx-3 fw-bold" href="{% url "Logout" %}">Logout <i class="fa-solid fa-right-from-bracket text-dark float-end"></i></a>
+                      </footer>
+                    {% endif %}
+                  </ul> {% comment %} For Mobile Screen Size {% endcomment %}
+                </div>
+
+
+                <span> {% comment %} This is a Search bar {% endcomment %}
+                  <div class="p-relative Ec-SearchBar Ec-Desktop-Menu-links">
+                    <i class="fa fa-search mt-1 btn text-muted position-absolute Ec-Search-icon"></i>
+                    <input class="mx-3 bg-light Ec-ProductSearchBar" placeholder="Search for Fragrance..." type="text" onclick="Search()">
+                  </div>
+                </span>
+  
+                {% if request.user.is_authenticated %}
+                  <div class="dropdown text-center Ec-Desktop-Menu-links">
+                    <button class="btn border-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <img class="img-fluid Ec-userProfile" src="{% static "images/user.png" %}" alt="">
+                    </button>
+                      
+                    </button>
+                    <ul class="dropdown-menu p-2 border-0 shadow-sm">
+                      <li><a class="dropdown-item text-capitalize " href="{% url "Profile" %}">Profile</a></li>
+                      <li><a class="dropdown-item " href="{% url "MyOrders" %}">My Orders</a></li>
+                      <li><a class="dropdown-item " href="{% url "MyWishlist" %}">My Wishlist</a></li>
+                      <li><a class="dropdown-item " href="{% url "ChangePassword" %}">Change Password</a></li>
+                      <li><a class="dropdown-item" href="{% url "Logout" %}">Logout</a></li>
+                    </ul>
+                  </div>
+                  
+                  <div class="Ec-Desktop-Menu-links">
+                    {% if Cart_len > 0 %}
+                      <small class="bg-dark text-light px-2 mb-3 Ec-Product-Cart-Quantity">{{Cart_len}}</small>
+                    {% endif %}
+                    <img class="img-fluid pt-2 Ec-Shopping-Cart" src="{% static "images/shopping-bag (1).png" %}" onclick="window.location.href = '{% url "Cart" %}'" alt="">
+                  </div>
+                {% else %}
+                  <a href="{% url "Login" %}" class="btn Ec-Desktop-Screen-Size-Logout-button">Login</a>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="Ec-mobile-screen-size-nav-items"> {% comment %} for mobile screen size {% endcomment %}
+              {% comment %} <input class="form-control w-50" type="text"> {% endcomment %}
+              
+              <a href="{% url "Search" %}" class="btn"><i class="fa-solid fa-search text-dark Ec-Mobile-Screen-Size-Search-icon"></i></a>
+              <button type="button" class="btn border"> 
+                <img class="img-fluid Ec-userProfile" src="{% static "images/shopping-bag (1).png" %}" onclick="window.location.href = '{% url "Cart" %}'" alt=""><span class="badge text-dark">{{Cart_len}}</span>
+              </button> 
+            </div> {% comment %} for mobile screen size {% endcomment %}
+            
+          </div>
+        </nav>
+      </div>
+    </section>
+    <!-- End NavBar Section -->
+  {% endblock Navbar %}
+
+  {% block OtherContent %}{% endblock OtherContent %}
+
+  <!-- footer of a website Part => 6 -->
+  {% block bottombar %}
+    <footer>
+      <div class="Ec-BottomContainer mt-5">
+        <div class="container pb-3">
+        
+          <div class="row mb-5">
+
+            <div class="col-md-3 mt-5 text-center">
+              <a class="text-decoration-none" href="{% url "Home" %}"><h5 class="Ec-bottom-hadding">Raza Fragrances</h5></a>
+              <p class="mt-4 Ec-bottom-link">Premium Range of Attar and Perfumes.</p>
+              <hr>
+            </div>
+
+            <div class="offset-1 col-md-2 col-3 mt-5">
+              <h6 class="mb-2 Ec-bottom-hadding">info</h6>
+              <a class="text-decoration-none Ec-bottom-link" href="{% url "Home" %}">Home</a> <br>
+              <a class="text-decoration-none Ec-bottom-link" href="{% url "Fragrance" %}">Fragrance</a> <br>
+              <a class="text-decoration-none Ec-bottom-link" href="{% url "AboutUs" %}">About us</a> <br>
+            </div>
+
+            <div class="col-md-2 col-4 mt-5">
+              <h6 class="mb-2 Ec-bottom-hadding">Categorys</h6>
+              <a class="text-decoration-none Ec-bottom-link" href="{% url "FragrancePage" 'Attar' %}">Attars</a><br>
+              <a class="text-decoration-none Ec-bottom-link" href="{% url "FragrancePage" 'Perfume' %}">Perfumes</a> <br>
+              <a class="text-decoration-none Ec-bottom-link" href="{% url "FragrancePage" 'Deodent' %}">Deodents</a> <br>
+            </div>
+
+            <div class="col-md-4 col-4 mt-5">
+              <h6 class="mb-2 Ec-bottom-hadding">Support</h6>
+              <a class="text-decoration-none Ec-bottom-link" href="{% url "TermsAndConditions" %}">Terms & Conditions</a> <br>
+              <a class="text-decoration-none Ec-bottom-link" href="{% url "Privacy" %}">Privacy </a> <br>
+              <a class="text-decoration-none Ec-bottom-link" href="{% url "ReturnAndRefund" %}">Return & Refund</a> <br>
+            </div>
+
+          </div>
+
+          <hr>
+          <footer class="text-center Ec-Brand-copyright-text pt-2 pb-2">copyright © 2023 <a class="text-decoration-none Ec-Brand-copyright-text" href="{% url "Home" %}">Raza Fragrance</a> All Rights Reserved.</footer>
+
+        </div>
+      </div>
+    </footer>
+  {% endblock bottombar %}
+
+  
+  <script src="{% static "js/bootstrap.bundle.min.js"%}"></script>
+  <script src="{% static "js/all.min.js"%}"></script>
+  <script src="{% static "js/popper.min.js"%}"></script>
+  <script src="{% static "js/MyScript.js" %}"></script>
+  {% block scripts %}{% endblock scripts %}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js" integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+{% comment %} ------------------------------------------------------------------------------------- {% endcomment %}
+
+{% comment %} This Script for owl carousel {% endcomment %}
+  <script>
+    $('.owl-carousel').owlCarousel({
+      loop:true,
+      margin:10,
+      nav:false,
+      dots:false,
+      autoplay:true,
+      autoplayTimeout:3000,
+      animateOut: 'fadeOut',
+      stagePadding: 0,
+      responsive:{
+          0:{
+              items:2
+          },
+          700:{
+              items:3
+          },
+          1000:{
+              items:4
+          },
+          1400:{
+              items:5
+          }
+      }
+    });
+
+  </script> {% comment %} This Script for owl carousel {% endcomment %}
+
+
+{% comment %} -----------------------------------------------------------------=-------------- {% endcomment %}
+
+  {% comment %} Back to top button {% endcomment %}
+  <button type="button" class="btn btn-dark btn-floating btn-lg" id="btn-back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+        //Get the button
+    let mybutton = document.getElementById("btn-back-to-top");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      if (
+        document.body.scrollTop > 20 ||
+        document.documentElement.scrollTop > 20
+      ) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+    // When the user clicks on the button, scroll to the top of the document
+    mybutton.addEventListener("click", backToTop);
+
+    function backToTop() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
+
+  <script>
+    function Search(){
+      window.location.href = "{% url "Search" %}"
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block css %}{% static "css/1.Home.css" %}{% endblock css %}
+{% block title %}HOME{% endblock title %}
+
+{% block OtherContent %}
+
+  <!-- Background Image and Hadding Section -->
+  <section>
+    <div class="Ec-front-banner slide-in-bck-center">
+      <div class="container text-center">
+        <h4 class="tracking-in-contract-bck g-font-Montserrat Ec-bannerHadding">A PREMIUM COLLECTION OF FRAGRANCES</h4>
+        {% comment %} <h6 class="g-font-Montserrat Ec-BottomText tracking-in-contract-bck">SLIDE BOTTOM</h6>
+        <img class="img-fluid Ec-bottomArrow heartbeat" src="{% static "images/bottom arrow.png" %}" alt=""> {% endcomment %}
+      </div>
+    </div>
+
+    <div class="Ec-Mobile-Friendly-img">
+      <a href="{% url "Fragrance" %}"><img class="img-fluid mt-5 pt-5" src="{% static "images/perfume.jpg" %}" alt=""></a>
+    </div>
+
+  </section>
+  <!-- End Background Image and Hadding Section -->
+  
+  
+  <main>
+    <!-- 1st Product Listing Section -->
+    {% comment %} <div class="Ec-Desktop-size-product-listing"> {% endcomment %}
+    <section style="background-color: white;">
+      {% if Perfume %}
+        <div class="container mb-1 Ec-MainProductContainer" id="perfume" >
+          <p class="mb-4 d-inline-block  Ec-Perfume-Hadding" style="font-size:110%; letter-spacing: 1px;">PERFUMES</p>
+          <span class="float-end mb-4">
+            <a class="text-decoration-none text-dark" href="{% url "FragrancePage" "Perfume" %}">See more</a>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15px" width="15px" class="icon">
+              <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5" stroke="#292D32" d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008"></path>
+            </svg>
+          </span>
+
+          <div class="owl-carousel owl-theme">
+            {% for perfume in Perfume %}
+              <a class="text-decoration-none text-dark" href="{% url "ProductDetail" perfume.id %}">
+                <div class="item border px-2 py-3 Ec-Product"><img class="rounded-2 mb-3 Ec-Product" src="{{perfume.Product_Image.url}}" alt="">
+                  {% comment %} <small class="text-muted mx-1">  </small> {% endcomment %}
+                  <p class="card-title mt-3 mb-2 mx-1 Ec-Product-Title">{{perfume.Title}}</p>
+                  <span class="mx-2 Ec-price">₹ {{perfume.Selling_Price}}</span><small class="card-title mx-1 text-muted text-decoration-line-through">₹{{perfume.Mrp}} </small>
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </section> 
+      <!-- End Product Listing Section -->
+
+      {% comment %} Perfume Showcase {% endcomment %}
+      <section style="background-color: white;">
+        <div class="container pt-4 pb-4 Ec-ShowCase">
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-2">
+              <img class="img-fluid w-100 rounded-3 shadow Ec-ShowCaseImage" src="{% static "images/zara.jpg" %}" alt="">
+            </div>
+            <div class="col-md-8">
+              <h2 class="text-center mb-5 Cursive">Raza Fragrances | Perfumes</h2>
+              <p class="Cursive Ec-ShowCaseText">Raza Fragrances, your go-to destination for captivating fragrances that will leave a lasting impression. Our collection features a blend of unique and alluring scents that cater to all preferences, from floral to woody and everything in between. Whether you're looking for a signature scent or a gift for a loved one, our website offers an extensive range of fragrances for men and women. Shop now and indulge in the luxurious aromas that Raza Fragrances has to offer.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+    
+    <!-- 2nd Product Listing for Attar Section -->
+    {% comment %} {% if Attar %} {% endcomment %}
+      <section style="background-color: white;">
+        <div class="container mb-1 Ec-MainProductContainer " id="perfume" >
+          <p class="mb-4 d-inline-block  Ec-Perfume-Hadding" style="font-size:110%; letter-spacing: 1px;">ATTARS</p>
+          <span class="float-end mb-4">
+            <a class="text-decoration-none text-dark" href="{% url "FragrancePage" "Attar" %}">See more
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15px" width="15px" class="icon">
+                <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5" stroke="#292D32" d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008"></path>
+              </svg>
+            </a>
+          </span>
+
+          <div class="owl-carousel owl-theme">
+            {% for perfume in Perfume %}
+              <a class="text-decoration-none text-dark" href="{% url "ProductDetail" perfume.id %}">
+                <div class="item border px-2 py-3 Ec-Product"><img class="rounded-2 mb-3 Ec-Product" src="{{perfume.Product_Image.url}}" alt="">
+                  {% comment %} <small class="text-muted mx-1">  </small> {% endcomment %}
+                  <p class="card-title mt-3 mb-2 mx-1 Ec-Product-Title">{{perfume.Title}}</p>
+                  <span class="mx-2 Ec-price">₹ {{perfume.Selling_Price}}</span><small class="card-title mx-1 text-muted text-decoration-line-through">₹{{perfume.Mrp}} </small>
+                </div>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </section> 
+      <!-- End Product Listing Section -->
+
+      {% comment %} Attar Showcase {% endcomment %}
+      <section style="background-color: white;">
+        <div class="container pt-4 pb-4 Ec-ShowCase">
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-2">
+              <img class="img-fluid w-100 rounded-3 shadow Ec-ShowCaseImage" src="{% static "images/Itra.jpeg" %}" alt="">
+            </div>
+            <div class="col-md-8">
+              <h2 class="text-center mb-5 Cursive">Raza Fragrances | Attar</h2>
+              <p class="Cursive Ec-ShowCaseText">Raza Fragrances Itra, the ultimate destination for exquisite fragrances that will leave a lasting impression. Our collection boasts a unique blend of alluring scents that cater to all preferences, from floral to woody and everything in between. Whether you're searching for a signature scent or a gift for someone special, our website offers an extensive selection of fragrances for men and women. Shop now and indulge in the luxurious aromas that Raza Fragrances Itra has to offer.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+
+    <!-- 3nd Product Listing for Deodent Section -->
+    {% comment %} {% if Deodent %} {% endcomment %}
+    <section style="background-color: white;">
+      <div class="container mb-1 Ec-MainProductContainer " id="perfume" >
+        <P class="mb-4 d-inline-block Ec-Perfume-Hadding" style="font-size:110%; letter-spacing: 1px;">DEODENTS</P>
+        <span class="float-end mb-4">
+          <a class="text-decoration-none text-dark" href="{% url "FragrancePage" "Deodent" %}">See more
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15px"  width="15px" class="icon">
+              <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5" stroke="#292D32" d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008"></path>
+            </svg>
+          </a>
+        </span>
+
+          <div class="owl-carousel owl-theme">
+            {% for perfume in Perfume %}
+              <a class="text-decoration-none text-dark" href="{% url "ProductDetail" perfume.id %}">
+                <div class="item border px-2 py-3 Ec-Product"><img class="rounded-2 mb-3 Ec-Product" src="{{perfume.Product_Image.url}}" alt="">
+                  {% comment %} <small class="text-muted mx-1">  </small> {% endcomment %}
+                  <p class="card-title mt-3 mb-2 mx-1 Ec-Product-Title">{{perfume.Title}}</p>
+                  <span class="mx-2 Ec-price">₹ {{perfume.Selling_Price}}</span><small class="card-title mx-1 text-muted text-decoration-line-through">₹{{perfume.Mrp}} </small>
+                </div>
+              </a>
+            {% endfor %}
+          </div>
+      </div>
+    </section> 
+
+    {% comment %} Deodent Shoacase {% endcomment %}
+    <section style="background-color: white;">
+      <div class="container pt-4 pb-4 Ec-ShowCase">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-2">
+            <img class="img-fluid w-100 rounded-3 shadow Ec-ShowCaseImage" src="{% static "images/Itra.jpeg" %}" alt="">
+          </div>
+          <div class="col-md-8">
+            <h2 class="text-center mb-5 Cursive">Raza Fragrances | Deodent</h2>
+            <p class="Cursive Ec-ShowCaseText">Raza Fragrances Itra, the ultimate destination for exquisite fragrances that will leave a lasting impression. Our collection boasts a unique blend of alluring scents that cater to all preferences, from floral to woody and everything in between. Whether you're searching for a signature scent or a gift for someone special, our website offers an extensive selection of fragrances for men and women. Shop now and indulge in the luxurious aromas that Raza Fragrances Itra has to offer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+
+{% endblock OtherContent %}
+

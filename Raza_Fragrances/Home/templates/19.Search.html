@@ -1,0 +1,30 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block css %}{% static "css/19.Search.css" %}{% endblock css %}
+{% block title %}Search{% endblock title %}
+
+{% block Navbar %}{% endblock Navbar %}
+{% block OtherContent %}
+    <div class="container" style="background:none;">
+        <a class="d-block text-decoration-none text-dark border-bottom text-center inika Ec-Raza_Fragrances" href="{% url "Home" %}">RAZA FRAGRANCES</a>
+        <form id="search-form" action="#" method='POST' autocomplete=off>
+            {% csrf_token %}
+
+            <i class="fa fa-search btn position-absolute " style="margin-top: 16px; font-size:1.2rem;"></i>
+            <input class="Ec-SearchBar" placeholder="Search for Fragrance..." autofocus = True type="text" name="Search-input" id="search-input">
+        </form>
+        <div class="shadow rounded-2 Ec-not-visible Ec-result-box" id="result-box"></div>
+        <div class="Ec-Search-bottom-section">
+            <p class="mt-3 mb-3 inika Ec-Category">Shop by Category</p>
+            <a href="{% url "FragrancePage" "Perfume" %}" class="p-3 g-5 Ec-Category-link">Perfumes</a>
+            <a href="{% url "FragrancePage" "Attar" %}" class="p-3 Ec-Category-link">Attars</a>
+            <a href="{% url "FragrancePage" "Deodent" %}" class="p-3 Ec-Category-link">Deodents</a>
+        </div>
+
+    </div>
+{% endblock OtherContent %}
+{% block bottombar %}{% endblock bottombar %}
+{% block scripts %}
+    <script src="{% static "js/Search.js" %}" defer></script>
+{% endblock scripts %}
+

@@ -1,0 +1,76 @@
+.Ec-Fragrance-Section{
+    margin-top: 150px;
+}
+
+.Ec-Category{
+    font-weight: 500;
+    display: inline;
+    border-bottom: 2px solid black;
+    padding-bottom: 5px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.Ec-Category-Choice{
+    cursor: pointer;
+    display: block;
+    padding: 10px 0px;
+}
+
+.Ec-First-link{
+    margin-top: 40px;
+}
+
+.Ec-Category-Choice:hover{
+    transition: .1s;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 110%;
+}
+
+
+p{
+    font-size: 100%;
+}
+
+.Ec-Product{
+    transition: .3s;
+}
+
+.Ec-Product:hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+
+.Ec-Mobile-layout{
+    display: none;
+}
+
+
+
+@media only screen and (max-width : 700px){
+
+    .Ec-Fragrance-Section{
+        margin-top: 120px;
+    }
+
+    .Ec-Desktop-layout{
+        display: none;
+    }
+
+    .Ec-Mobile-Category-choice{
+        display: contents;
+    }
+
+    .Ec-Mobile-layout{
+        display: contents;
+    }
+
+    .Ec-Price{
+        font-size: 20px;
+    }
+  
+}

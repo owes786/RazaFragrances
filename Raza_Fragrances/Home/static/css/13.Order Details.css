@@ -1,0 +1,20 @@
+.Ec-MyOrders-Section{
+    margin-top: 145px;
+}
+
+.Ec-UserProfile{
+    width: 45px;
+    display: inline-block;
+}
+
+
+@media only screen and (max-width : 800px){
+    .Ec-Address-Details{
+        margin-top: 50px;
+    }
+
+    .Ec-Payment-Details{
+        margin-top: 50px;
+    }
+    
+}

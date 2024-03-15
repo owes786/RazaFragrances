@@ -1,0 +1,78 @@
+.Ec-My-Orders-Section{
+    padding-top: 145px;
+}
+
+.Ec-UserProfile{
+    width: 45px;
+    display: inline-block;
+}
+
+.Ec-MyOrders-Section{
+    margin-top: 150px;
+}
+
+.Ec-MyOrderButton{
+    width: 95%;
+}
+
+.Ec-My-Order-Row a{
+    display: block;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.805);
+}
+
+p{
+    font-size: 100%;
+}
+
+.Mobile-Screen-Size-My-Order-Hadding{
+    display: none;
+}
+
+.Ec-Mobile-Screen-Size-Order-Status-Hadding{
+    display: none;
+}
+
+.Ec-Mobile-Screen-Size-OrderStatus-ProgressBar{
+    display: none;
+}
+
+
+@media only screen and (max-width : 700px){
+
+    p{
+        font-size: 80%;
+    }
+
+    .Ec-OrderStatus{
+        font-size: 80%;
+    }
+
+    a{
+        font-size: 90%;
+    }
+
+    .Ec-Desktop-Screen-Size-Profile-links{
+        display: none;
+    }
+    
+    .Ec-Desktop-Screen-Size-Order-Status-Hadding{
+        display: none;
+    }
+
+    .Ec-Desktop-Screen-Size-OrderStatus-ProgressBar{
+        display: none;
+    }
+    
+    .Mobile-Screen-Size-My-Order-Hadding{
+        display: block;
+    }
+    
+    .Ec-Mobile-Screen-Size-Order-Status-Hadding{
+        display: contents;
+    }
+
+    .Ec-Mobile-Screen-Size-OrderStatus-ProgressBar{
+        display: block;
+    }
+}

@@ -1,0 +1,173 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block css %}{% static "css/4.Product Detail.css" %}{% endblock css %}
+{% block title %}Product-Details{% endblock title %}
+
+{% block OtherContent %}
+  <section style="background-color: whitesmoke;">
+    <div class="container Ec-ProductDetailContainer">
+        <div class="row">
+          <div class="col-md-5 text-center border-end"> 
+            <img class="img-fluid Ec-ProductImage" src="{{product.Product_Image.url}}" alt="">
+
+            {% comment %} To Check is Product already in wishlist or not  {% endcomment %}
+            {% if request.user.is_authenticated %}
+              {% if Already_in_Wishlist %}
+                <a href="{% url "RemoveWishlistItem" product.id %}"><img class="img-fluid btn pt-2 Ec-Wishlist-icon" src="{% static "images/heart (1).png" %}" alt=""></a>
+              {% else %}
+                <a href="{% url "MoveToWishlist" product.id %}"><img class="img-fluid btn pt-2 Ec-Wishlist-icon" src="{% static "images/heart.png" %}" alt=""></a>
+              {% endif %}
+            {% endif %}
+
+          </div>
+          <div class="col-md-7">
+            <div class="Ec-Products">
+                <p class="Ec-ProductTitle">{{product.Title}}</p>
+                <p class="Ec-Brand-Text" >Brand : {{product.Brand}}</p>
+                <p class="Ec-ProductPrice d-inline">Price : ₹{{product.Selling_Price}}</p>
+                <span class="Ec-ProductMrp">Mrp: ₹{{product.Mrp}}</span> <br> <br>
+
+                {% if not request.user.is_authenticated %}
+                  <a href="{% url "Login" %}" type="submit" class="btn btn-dark Ec-button">ADD TO CART</a>
+                  <a href="{% url "Login" %}" type="submit" class="btn btn-dark Ec-button">BUY NOW</a>
+                {% endif %}
+
+                {% comment %} To Check Product already in Cart or not {% endcomment %}
+                {% if request.user.is_authenticated %}
+                  {% if Already_in_Cart %}
+                    <a href="{% url "Cart" %}" class="btn btn-secondary Ec-button">GO TO CART</a>
+                    {% else %}
+                    <form action="/Add-to-Cart" class="d-inline">
+                      <input type="hidden" name="Product_id" value={{product.id}}>
+                      <button type="submit" class="btn btn-dark Ec-button">ADD TO CART</button>
+                    </form>
+                    {% endif %}
+                    <form action="/Buy-now" class="d-inline">
+                      <input type="hidden" name="Prod_id" value={{product.id}}>
+                      <button type="submit" class="btn btn-dark d-inline Ec-button">BUY NOW</button>
+                    </form>
+                {% endif %}
+              
+              </div>
+              <div class="row border-top mt-5">
+                <div class="col-6 d-flex align-items-center justify-content-center border-end">
+                    <br> <br><p class="text-muted" style="font-size:100%;">Shippement only in M.P.</p>
+                </div>
+                <div class="col-6 d-flex align-items-center justify-content-center border-end">
+                  <p class="text-muted px-3" style="font-size:100%;">Cash on Delevery</p>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <h5 class="g-font-Montserrat Ec-ProductDescription "><strong>Description</strong></h5>
+        <p class="pb-5 Ec-Description-Text">{{product.Description}}</p>
+      </div>
+  </section>
+
+
+
+  {% comment %} This is a review section {% endcomment %}
+  <section class="mt-5" style="background-color: white;">
+    <div class="container pt-5 pb-5">
+      <div class="border-bottom pb-3 mb-3">
+        <h5 class="d-inline Ec-Customer-Review-hadding">Customer Reviews</h5> 
+        {% if request.user.is_authenticated %}
+          {% if is_Purchased %}
+            <a class="text-dark text-decoration-none float-end Ec-Write-review-link" href="{% url "UserReview" product.id %}">Write a Review</a>
+            {% else %}
+            <a class="text-dark text-decoration-none float-end Ec-Write-review-link" href="">Write a Review</a>
+          {% endif %}
+        {% else %}
+          <a class="text-dark text-decoration-none float-end Ec-Write-review-link" href="{% url "Login" %}">Write a Review</a>
+        {% endif %}
+      </div>
+
+
+      {% if review_obj %}
+        <div class="Ec-Review-Section">
+          {% for review_img in review_obj %}
+            <!-- Button trigger modal -->
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{review_img.id}}">
+              <img class="img-fluid border mb-2 Ec-Review-images" src="{{review_img.image.url}}" width="100rem" alt="" >
+              {% comment %} <img src="{{review_img.image.url}}" width="100px" alt=""> {% endcomment %}
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop{{review_img.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  {% comment %} <div class="modal-header">
+                    <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                  </div> {% endcomment %}
+                  <div class="modal-body">
+                    <p class="mt-2">Reviewed by : <strong class="text-capitalize">{{review_img.user.first_name}}</strong>
+                      <button type="button" class="btn float-end" data-bs-dismiss="modal" aria-label="Close">Back</button>
+                    </p>
+                    
+                    <img class="img-fluid w-50 text-center" src="{{review_img.image.url}}" alt="">
+                    <hr>
+                    <p>{{review_img.Review_Description}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+          
+
+          <div class="mt-4">
+            {% for review in review_obj %}
+              <div class="mb-5">
+                <img class="img-fluid" src="{% static "images/user (1).png" %}" width="30px" alt=""> <p class="d-inline px-2"> {{review.user.first_name}} {{review.user.last_name}}</p>
+                <p class="text-muted mt-2 Ec-Review-Text">{{review.Review_Description}}</p>
+                <p class="text-muted">{{review.Date}}</p>
+              </div>
+            {% endfor %}
+          </div>
+
+          
+        </div>
+        <a class="text-dark text-decoration-none px-3 float-end Ec-See-all-reviews-hadding" href="{% url "AllReviews" product.id %}">See all {{Reviews_len}} Reviews
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15px" width="15px" class="icon">
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5" stroke="#292D32" d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008"></path>
+          </svg>
+        </a>
+
+        
+      {% else %}
+        <div class="d-flex justify-content-center align-items-center">
+          <p class="text-muted mt-2">No reviews found!</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+
+<!-- Product Listing Section -->
+  <section style="background-color: white;">
+    <div class="container mt-5 pt-5 mb-5 pb-5 Ec-MainProductContainer ">
+      <p class="mb-4 inika d-inline-block Ec-Explore-Fragrance-Hadding">EXPLORE FRAGRANCES</p>
+      <span class="float-end mb-4">
+        <a class="text-decoration-none text-dark" href="{% url "FragrancePage" "AllProduct" %}" style="font-size;100%;"> See more
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15px" width="15px" class="icon">
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5" stroke="#292D32" d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008"></path>
+          </svg>
+        </a>
+      </span>
+
+      <div class="owl-carousel owl-theme">
+        {% for MyProduct in AllProduct %}
+          <a href="{% url "ProductDetail" MyProduct.id %}" class="text-decoration-none text-dark">
+            <div class="item border px-2 py-3 Ec-Product"><img class="rounded-2 mb-3 Ec-Product-image" src="{{MyProduct.Product_Image.url}}" alt="">
+              {% comment %} <small class="text-muted mx-1"> Eau De Perfume for Men </small> {% endcomment %}
+              <p class="card-title mt-3 mb-2 mx-1 Ec-Bottom-Product_Title">{{MyProduct.Title}}</p>
+              <span class="mx-2 Ec-price">₹ {{MyProduct.Selling_Price}}</span><small class="card-title mx-1 text-muted text-decoration-line-through">₹{{MyProduct.Mrp}}</small>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+  </section>
+  <!-- End Product Listing Section -->
+
+{% endblock OtherContent %}
+

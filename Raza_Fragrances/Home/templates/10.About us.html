@@ -1,0 +1,35 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block css %}{% static "css/10.About us.css" %}{% endblock css %}
+{% block title %}About us{% endblock title %}
+
+{% block OtherContent %}
+  <div class="container Ec-About-page-container">
+    <h3 class="Ec-About-us-Text">About Us!</h3>
+
+    <h5 class="text-center g-font-Montserrat mt-3 pb-2 Ec-Raza-Rragrance-Text">Welcome To <span><strong><a class="text-decoration-none text-dark" href="{% url "Home" %}">Raza Fragrances</a></strong></span></h5>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-9">
+            <p class="mt-5 text-muted"><span >Raza Fragrances
+            </span> is a Professional e commerce Platform. Here we will provide you only Premium Fragrances, which you will like very much. We're dedicated to providing you the best of Fragrances, with a focus on dependability and Premium Fragrances. We're working to turn our passion for e commerce into a booming online website. We hope you enjoy our e commerce as much as we enjoy offering them to you.</p>
+            <p class="text-muted">I will keep posting more important posts on this Website for all of you. Please give your support and love.</p>
+    
+    
+            <p class="mt-5">Thanks For Visiting Our Site.</p>
+
+            <p class=" mt-5 pb-3">Have a nice day!</p>
+
+            <hr>
+            
+        </div>
+
+        <div class="col-md-3 Ec-img-column">
+            <img class="img-fluid mt-5 rounded-3 shadow-lg Ec-img" src="{% static "images/About us img.jpg" %}" alt="">
+        </div>
+    </div>
+
+  </div>
+{% endblock OtherContent %}
