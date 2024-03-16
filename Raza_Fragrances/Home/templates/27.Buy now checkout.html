@@ -1,0 +1,171 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block title %}Checkout{% endblock title %}
+{% block css %}{% static "css/20.Checkout.css" %}{% endblock css %}
+
+{% block OtherContent %}
+  <section style="background-color: whitesmoke;">
+    <div class="container Ec-Checkout-section">
+        {% comment %} for Buy Now {% endcomment %}
+        <form action="/Buy-now-Payment">
+          <div class="row">
+            <div class="col-md-8 sahdow">
+
+              <div class="container shadow rounded-2">
+                <P class="border-bottom pt-3 pb-2 rounded-2 g-font-Montserrat"> <strong>SHIPPING ADDRESS</strong> </P>
+                {% if Cust_address %}
+                  {% if messages %}
+                    {% for msg in messages %}
+                      <p class="alert alert-danger">{{msg}}</p>
+                    {% endfor %}
+                  {% endif %}
+
+                
+                  {% for address in Cust_address %}            
+                    <div class="shadow-sm bg-transparent mb-2">
+                      <div class="card-body">
+                        <strong class="d-inline">{{address.Name}}</strong>
+                          
+                        <div class="form-check mx-2 d-inline float-end" style="cursor: pointer;">
+                          <input class="form-check-input" type="radio" name="custid" id="custadd{{forloop.counter}}" value="{{address.id}}">
+                          <label class="form-check-label" for="custadd{{forloop.counter}}">Address {{forloop.counter}}</label>
+                        </div>
+                        <hr>
+                        <span>+{{address.Mobile_Number}},  ({{address.State}}), {{address.City}}, {{address.Pincode}}</span>
+                        <p>{{address.Address}}</p>
+                        <p>Landmark : {{address.Landmark}}</p>
+                      </div>
+
+                    </div>
+                    <hr>
+                  {% endfor %}
+                {% else %}
+                    {% if messages %}
+                      {% for msg in messages %}
+                        <p class="alert alert-danger">{{msg}}</p>
+                      {% endfor %}
+                    {% endif %}
+                  <a class="text-decoration-none text-dark d-block pb-3" href="{% url "AddNewAddress" %}">Add new address</a>
+                {% endif %}
+              </div>
+                
+            </div>
+
+
+            {% comment %} Second column {% endcomment %}
+            <div class="col-md-4">
+              <div class="container shadow pt-3 rounded-2">
+                <header>
+                  <P class="bg-dark text-light px-3 pt-2 pb-2 rounded-2">PRICE SUMMERY</P>
+                </header>
+                <div class="row mx-2">
+                  <table class="table table-hover px-5">
+                    <thead>
+                      <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for Product in Product %}
+                        <tr>
+                          <td>
+                            <a href="{% url "ProductDetail" Product.Product.id %}">
+                              <img class="img-fluid" src="{{Product.Product.Product_Image.url}}" width="50px" alt="">
+                            </a>
+                          </td>
+                          <td>{{Product.quantity}}</td>
+                          <td>₹ {{Product.Product.Selling_Price}}</td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+
+              
+              {% comment %} {{Cart_Product}} {% endcomment %}
+              <p class="px-2">Shipping Charges <span class="float-end">Free</span></p>
+              {% comment %} <p class="px-2">item({{Cart_qty}}) <span class="float-end">₹ {{Total_amount}}</span></p> {% endcomment %}
+                {% for Product in Product %}
+                  <strong class="px-2">Total Amount <span class="float-end px-2">₹ {{Product.Product.Selling_Price}}</span></strong>
+                {% endfor %}
+              <hr>
+              <footer>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-dark w-100 mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="Continue-button">
+                  Place Order
+                </button>
+                <!-- Modal -->
+                <div class="modal mt-5 pt-2 fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h6 class="modal-title fw-bold" id="staticBackdropLabel">PAYMENT METHOD</h6>
+                        <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">Back</button>
+                      </div>
+                      <div class="modal-body">
+                        {% comment %} <small class="text-success float-end fw-bold mb-1 tracking-in-contract-bck">2% off on prepaid order.</small> {% endcomment %}
+                        <button type="submit" class="btn btn-dark w-100 mb-3" id="rzp-button1">Pay Now</button>
+                        <button type="submit" class="btn btn-dark w-100 mb-3">Cash on Delevery</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </footer>
+              <p class="text-muted mt-4 pt-1 mx-4">100% Secured payment and original products.</p>
+            </div>
+          </div>
+        </form>
+    </div>
+  </section>
+
+
+{% endblock OtherContent %}
+{% block bottombar %}{% endblock bottombar %}
+{% block scripts %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  var options = {
+    "key": "rzp_test_QVrqs1qavlFIRL", // Enter the Key ID generated from the Dashboard
+    "amount": "{{payment.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Raza Fragrances",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        var form = document.getElementById('PaymentForm')
+        window.location.href=`http://127.0.0.1:8000/Payment?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&signature=${response.razorpay_signature}&custid=${form.elements["custid"].value}`
+    },
+    "prefill": {
+      "name": "Raza Fragrances",
+      "email": "owesmansuri50@gmail.com",
+      "contact": "7879312150"
+    },
+    "notes": {
+      "address": "Raza Fragrances"
+    },
+    "theme": {
+      "color": "#2599cc"
+    }
+  };
+  var rzp1 = new Razorpay(options);
+  rzp1.on('payment.failed', function (response){
+    alert(response.error.code);
+    alert(response.error.description);
+    alert(response.error.source);
+    alert(response.error.step);
+    alert(response.error.reason);
+    alert(response.error.metadata.order_id);
+    alert(response.error.metadata.payment_id);
+  });
+  document.getElementById('rzp-button1').onclick = function(e){
+      rzp1.open();
+      e.preventDefault();
+  }
+
+  </script>
+{% endblock scripts %}
+
+

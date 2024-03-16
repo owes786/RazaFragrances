@@ -120,12 +120,28 @@ def Add_To_Cart(request):
 # This Function for Buy now.
 def Buy_now(request):
     if request.user.is_authenticated:
+        Cart_len = len(Cart.objects.filter(user = request.user))
+        Cust_address = Customer_Details.objects.filter(user = request.user)
         Product_id = request.GET.get('Prod_id')
         Product_obj = Product.objects.get(pk = Product_id)
         Already_in_Buy_Now_Table = Buy_now_model.objects.filter(user = request.user)
         Already_in_Buy_Now_Table.delete()
         Buy_now_model(user = request.user, Product = Product_obj).save()
-        return redirect('/checkout/')
+
+        try:                
+            client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_SECRET_ID))
+
+            data = { "amount": Product_obj.Selling_Price ,"currency": "INR", "payment_capture" : 1 }
+            payment = client.order.create(data=data)
+            print(payment)
+
+            order_id = payment['id']
+            
+        except:
+            return redirect('/Connection-lost/')
+
+
+        return render(request, '27.Buy now checkout.html', {'Cart_len':Cart_len, 'Cust_address':Cust_address,})
     else:
         messages.warning(request, "Please Login or Create new Account for Shopping.")
         return HttpResponseRedirect('/Login/')
@@ -135,6 +151,7 @@ def Buy_now(request):
 # This Function Show Cart items
 def Show_Cart(request):
     if request.user.is_authenticated:
+        Cart_len = len(Cart.objects.filter(user = request.user))
         cart = Cart.objects.filter(user = request.user)
         amount = 0.0
         Total_amount = 0.0
@@ -146,7 +163,6 @@ def Show_Cart(request):
                 amount += tempamount
                 Total_amount = amount
             
-            Cart_len = len(Cart.objects.filter(user = request.user))
             return render(request, '11.Cart.html', {'Cart_item':cart,'items':items ,'amount':amount ,'Total_amount':Total_amount ,'Cart_len':Cart_len})
         else:
             return render(request, '5.Empty Cart.html')
@@ -215,8 +231,8 @@ def decrease_quantity(request):
 # This Function Show Checkout Page for Add to Cart.
 def Checkout(request):
     if request.user.is_authenticated:
-        Cust_address = Customer_Details.objects.filter(user = request.user)
         Cart_len = len(Cart.objects.filter(user = request.user))
+        Cust_address = Customer_Details.objects.filter(user = request.user)
         amount = 0.0
         Total_amount = 0.0
         Cart_Product = [p for p in Cart.objects.all() if p.user == request.user]
@@ -290,7 +306,7 @@ def Payment_done(request):
 # Payment done function for Buy Now.
 def Buy_Now_Payment_done(request):
     if request.user.is_authenticated:
-        Customer_address_id = request.GET.get('Customer_address_id')
+        Customer_address_id = request.GET.get('custid')
         try:
             Customer_address_obj = Customer_Details.objects.get(pk = Customer_address_id)
         except:
