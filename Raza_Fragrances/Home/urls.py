@@ -43,6 +43,7 @@ urlpatterns = [
     path('Return-and-Refund/', views.Return_Refund, name='ReturnAndRefund'),
     path('Signup/', views.Signup, name='Signup'),
     path('Change-Password/', views.PasswordChange, name='ChangePassword'),
+    path('reset-password/',PasswordResetView.as_view(template_name = '29.password reset.html'), name="ResetPassword"),
     path('Login/', views.Login, name='Login'),
     path('Logout/', views.Logout, name='Logout'),
 ]

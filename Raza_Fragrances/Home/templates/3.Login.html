@@ -33,7 +33,7 @@
           <i class="fa-solid fa-lock position-absolute mt-5 pt-2 Ec-icon"></i>
           {{form.password}}
           <p class="text-danger pt-1">{{form.password.errors|striptags}}</p>
-          <a class="float-end pt-1 fw-bold" href="#">forget Password?</a>
+          <a class="float-end pt-1 fw-bold" href="{% url "ResetPassword" %}">forget Password?</a>
         </div>
 
         <input type="checkbox" onclick="myFunction()"> Show Password
