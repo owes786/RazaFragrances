@@ -1,5 +1,6 @@
 from django.urls import path
 from .import views
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, PasswordChangeDoneView, PasswordResetCompleteView
 
 urlpatterns = [
     path('', views.HomeProductView.as_view(),name='Home'),
