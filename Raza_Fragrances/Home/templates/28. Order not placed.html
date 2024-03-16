@@ -1,0 +1,11 @@
+{% extends "Base.html" %}
+{% load static %}
+{% block title %}Order Cancelled{% endblock title %}
+{% block OtherContent %}
+    <div class="container text-center mt-5 pt-5">
+        <img class="img-fluid Ec-Empty-img" src="{% static "images/" %}" alt="">
+        <h3 class="mt-5 g-font-Montserrat">Sorry, order could not placed, Try again !</h3>
+        <button class="mt-4 btn btn-dark" onclick="window.location.href='{% url "Fragrance" %}'">Shop Now</button>
+    </div>
+{% endblock OtherContent %}
+{% block bottombar %}{% endblock bottombar %}

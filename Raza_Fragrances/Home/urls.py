@@ -17,6 +17,7 @@ urlpatterns = [
     path('checkout/', views.Buy_now_Checkout, name="checkout"),
     path('Payment/', views.Payment_done, name="Payment"),
     path('Buy-now-Payment/', views.Buy_Now_Payment_done, name="BuyNowPayment"),
+    path('Order-not-placed/', views.Order_not_placed, name="OrderNotPlaced"),
     path('Connection-lost/', views.connection_lost, name="NointernetConnection"),
     path('Review/<int:pk>/', views.review, name='UserReview'),
     path('My-Reviews/', views.ShowMyReviews, name='MyReviews'),

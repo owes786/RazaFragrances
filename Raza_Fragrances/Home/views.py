@@ -21,13 +21,11 @@ class HomeProductView(View):
             Cart_len = len(Cart.objects.filter(user = request.user))
             return render(request, '1.Home.html' ,{'Attar':Attar, 'Perfume':Perfume, 'Deodent':Deodent, 'HomeActive':'active', 'Cart_len':Cart_len, 'Products':Fragrances})
         return render(request, '1.Home.html' ,{'Attar':Attar, 'Perfume':Perfume, 'Deodent':Deodent, 'Products': Fragrances, 'HomeActive':'active'})
-    
 
 
 # This Function render Search.html  
 def Search(request):
     return render(request, "19.Search.html")
-    
 
 
 # This Function for SEarch
@@ -52,7 +50,6 @@ def Search_results(request):
     return JsonResponse({})
 
 
-
 # This Function Show Fragrance page
 class FragranceView(View):
     def get(self, request,data=None):
@@ -68,7 +65,6 @@ class FragranceView(View):
             return render(request, '12.Fragrance.html', {'Product':product_obj ,'FragranceActive':'active' ,'Cart_len':Cart_len})
         
         return render(request, '12.Fragrance.html', {'Product':product_obj ,'FragranceActive':'active'})
-
 
 
 # This function show Product Details.
@@ -103,6 +99,76 @@ class Product_DetailView(View):
         return render(request,'4.Product Detail.html',{'product':product, "AllProduct":product_obj, 'review_obj':review_obj})
 
 
+# This Function for Buy now.
+def Buy_now(request):
+    if request.user.is_authenticated:
+        Cart_len = len(Cart.objects.filter(user = request.user))
+        Product_id = request.GET.get('Prod_id')
+        Product_obj = Product.objects.get(pk = Product_id)
+        Already_in_Buy_Now_Table = Buy_now_model.objects.filter(user = request.user)
+        Already_in_Buy_Now_Table.delete()
+        Buy_now_model(user = request.user, Product = Product_obj).save()
+        return redirect('checkout')
+    else:
+        messages.warning(request, "Please Login or Create new Account for Shopping.")
+        return HttpResponseRedirect('/Login/')
+    
+
+# This Function Show Checkout Page for Buy now.
+def Buy_now_Checkout(request):
+    if request.user.is_authenticated:
+        Cart_len = len(Cart.objects.filter(user = request.user))
+        Cust_address = Customer_Details.objects.filter(user = request.user)
+        Buy_Now_Product = Buy_now_model.objects.filter(user = request.user)
+
+        for p in Buy_Now_Product:
+            Total_amount = p.Product.Selling_Price
+
+        try:                
+            client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_SECRET_ID))
+
+            data = { "amount": Total_amount * 100 ,"currency": "INR", "payment_capture" : 1 }
+            payment = client.order.create(data=data)
+            print(payment)
+
+            order_id = payment['id']
+            
+        except:
+            return redirect('/Connection-lost/')
+        
+        return render(request, '27.Buy now checkout.html', {'Product':Buy_Now_Product ,'Cust_address':Cust_address, 'Cart_len':Cart_len, 'Total_amount': Total_amount ,'order_id':order_id})
+    else:
+        return HttpResponseRedirect('/Login/')
+    
+
+# Payment done function for Buy Now.
+def Buy_Now_Payment_done(request):
+    if request.user.is_authenticated:
+        Customer_address_id = request.GET.get('custid')
+        try:
+            Customer_address_obj = Customer_Details.objects.get(pk = Customer_address_id)
+        except:
+            messages.warning(request, "Please select your shipping address before checkout !")
+            return redirect('/checkout/')
+        Buy_now_obj = Buy_now_model.objects.filter(user = request.user)
+
+        rzporder_id = request.GET.get('order_id')
+        payment_id = request.GET.get('payment_id')
+        signature = request.GET.get('signature')
+
+        if rzporder_id is not None:
+            Prepaid_Status = True
+        else:
+            Prepaid_Status = False
+
+        for item in Buy_now_obj:
+            Prod_id = Product.objects.get(pk=item.Product.id)            
+            OrderDetails(user=request.user, Product = Prod_id ,Razorpay_Order_id = rzporder_id, Razorpay_Payment_id = payment_id, Razorpay_signature = signature , Prepaid = Prepaid_Status, Name=Customer_address_obj.Name, Mobile_Number=Customer_address_obj.Mobile_Number,Pincode=Customer_address_obj.Pincode, City=Customer_address_obj.City, Address=Customer_address_obj.Address, State=Customer_address_obj.State, Landmark=Customer_address_obj.Landmark , Title=item.Product.Title, Mrp=item.Product.Mrp, Selling_Price=item.Product.Selling_Price, Product_Image=item.Product.Product_Image, Quantity=item.quantity, Total_Amount=item.quantity*item.Product.Selling_Price).save()
+            item.delete()
+            return redirect('/My-Orders/')
+    else:
+        return HttpResponseRedirect('/Login/')
+
 
 # This Function Render Cart.html
 def Add_To_Cart(request):
@@ -114,38 +180,6 @@ def Add_To_Cart(request):
     else:
         messages.warning(request, "Please Login or Create new Account for Shopping.")
         return HttpResponseRedirect('/Login/')
-
-
-
-# This Function for Buy now.
-def Buy_now(request):
-    if request.user.is_authenticated:
-        Cart_len = len(Cart.objects.filter(user = request.user))
-        Cust_address = Customer_Details.objects.filter(user = request.user)
-        Product_id = request.GET.get('Prod_id')
-        Product_obj = Product.objects.get(pk = Product_id)
-        Already_in_Buy_Now_Table = Buy_now_model.objects.filter(user = request.user)
-        Already_in_Buy_Now_Table.delete()
-        Buy_now_model(user = request.user, Product = Product_obj).save()
-
-        try:                
-            client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_SECRET_ID))
-
-            data = { "amount": Product_obj.Selling_Price ,"currency": "INR", "payment_capture" : 1 }
-            payment = client.order.create(data=data)
-            print(payment)
-
-            order_id = payment['id']
-            
-        except:
-            return redirect('/Connection-lost/')
-
-
-        return render(request, '27.Buy now checkout.html', {'Cart_len':Cart_len, 'Cust_address':Cust_address,})
-    else:
-        messages.warning(request, "Please Login or Create new Account for Shopping.")
-        return HttpResponseRedirect('/Login/')
-
 
 
 # This Function Show Cart items
@@ -169,7 +203,6 @@ def Show_Cart(request):
         
     else:
         return HttpResponseRedirect('/Login/')
-    
 
 
 # This Function Increase Cart item Quantity
@@ -199,7 +232,6 @@ def increase_quantity(request):
     return redirect('/Cart/')
 
 
-
 # This Function Decrease Cart item Quantity
 def decrease_quantity(request):
     if request.method == "GET":
@@ -225,7 +257,6 @@ def decrease_quantity(request):
         return JsonResponse(data)
 
     return redirect('/Cart/')
-
 
 
 # This Function Show Checkout Page for Add to Cart.
@@ -256,18 +287,6 @@ def Checkout(request):
             return redirect('/Connection-lost/')
 
     return render(request, '20.Checkout.html', {'Total_amount':Total_amount, 'Cust_address':Cust_address, 'Cart_len':Cart_len, 'Cart_Product':Cart_Product,'Razorpay_Total_amount':Razorpay_Total_amount, 'order_id': order_id})
-
-
-
-# This Function Show Checkout Page for Buy now.
-def Buy_now_Checkout(request):
-    if request.user.is_authenticated:
-        Cart_len = len(Cart.objects.filter(user = request.user))
-        Cust_address = Customer_Details.objects.filter(user = request.user)
-        Buy_Now_Product = Buy_now_model.objects.filter(user = request.user)
-        
-    return render(request, '20.Checkout.html', {'Buy_now':'Buy_Now', 'Product':Buy_Now_Product ,'Cust_address':Cust_address, 'Cart_len':Cart_len,})
-
 
 
 # Payment done function for Add to Cart.
@@ -302,38 +321,22 @@ def Payment_done(request):
         return HttpResponseRedirect('/Login/')
 
 
-
-# Payment done function for Buy Now.
-def Buy_Now_Payment_done(request):
-    if request.user.is_authenticated:
-        Customer_address_id = request.GET.get('custid')
-        try:
-            Customer_address_obj = Customer_Details.objects.get(pk = Customer_address_id)
-        except:
-            messages.warning(request, "Please select your shipping address before checkout !")
-            return redirect('/checkout/')
-        Buy_now_obj = Buy_now_model.objects.filter(user = request.user)
-
-        for item in Buy_now_obj:
-            Prod_id = Product.objects.get(pk=item.Product.id)            
-            OrderDetails(user=request.user, Product=Prod_id, Name=Customer_address_obj.Name, Mobile_Number=Customer_address_obj.Mobile_Number,Pincode=Customer_address_obj.Pincode, City=Customer_address_obj.City, Address=Customer_address_obj.Address, State=Customer_address_obj.State, Landmark=Customer_address_obj.Landmark , Title=item.Product.Title, Mrp=item.Product.Mrp, Selling_Price=item.Product.Selling_Price, Product_Image=item.Product.Product_Image, Quantity=item.quantity, Total_Amount=item.quantity*item.Product.Selling_Price).save()
-            item.delete()
-            return redirect('/My-Orders/')
-            
-    else:
-        return HttpResponseRedirect('/Login/')
-
-
-
 # for connection lost
 def connection_lost(request):
-    return render(request, "26.no internet connction.html")
+    Cart_len = len(Cart.objects.filter(user = request.user))
+    return render(request, "26.no internet connction.html", {'Cart_len':Cart_len})
 
+
+# Order cancelled
+def Order_not_placed(request):
+    Cart_len = len(Cart.objects.filter(user = request.user))
+    return render(request, '28. Order not placed.html', {'Cart_len':Cart_len})
 
 
 # This Function show Review Textarea
 def review(request,pk):
     if request.user.is_authenticated:
+        Cart_len = len(Cart.objects.filter(user = request.user))
         is_Purchased = False
         Prod = Product.objects.get(pk = pk)
         is_Purchased = OrderDetails.objects.filter(Q(user = request.user) & Q(Product = Prod)).exists()
@@ -351,13 +354,11 @@ def review(request,pk):
                 messages.success(request, "Review Posted")
                 return redirect('/My-Reviews/')
             
-            Cart_len = len(Cart.objects.filter(user = request.user))
             return render(request,'15.Review.html',{'Cart_len':Cart_len})
         else:
             return redirect('/Login/')
     else:
         return HttpResponseRedirect('/Login/')
-
 
 
 # This Function Shows Reviews to user how has posted.
@@ -370,7 +371,6 @@ def ShowMyReviews(request):
         return HttpResponseRedirect('/Login/')
 
 
-
 # This Function Delete user Reviews.
 def DeleteMyReviews(request,pk):
     if request.user.is_authenticated:
@@ -379,7 +379,6 @@ def DeleteMyReviews(request,pk):
         return redirect('/My-Reviews/')
     else:
         return HttpResponseRedirect('/Login/')
-
 
 
 # This Function Update user Reviews.
@@ -409,8 +408,6 @@ def ShowAllReviews(request,pk):
         return render(request, '18.All Reviews.html', {'product':Product_obj,'reviews':Reviews_obj ,'Cart_len':Cart_len})
     else:
         return render(request, '18.All Reviews.html', {'product':Product_obj,'reviews':Reviews_obj})
-
-
 
 
 # This Function Add product To Wishlist.
@@ -450,7 +447,6 @@ def RemoveCartItem(request, pk):
     return HttpResponseRedirect('/Cart/')
     
 
-
 # This Function show Empty Cart.
 def EmptyCart(request):
     if request.user.is_authenticated:
@@ -458,7 +454,6 @@ def EmptyCart(request):
         return render(request,'5.Empty Cart.html', {'Cart_len':Cart_len})
     else:
         return HttpResponseRedirect('/Login/')
-
 
 
 # This Function show profile page.
@@ -486,7 +481,6 @@ def My_Address(request):
         return render(request, '6.profile.html', {'UserAddressData':UserAddressData ,'ButtonActive':'btn-dark' ,'Cart_len':Cart_len})
     else:
         return HttpResponseRedirect('/Login/')
-    
 
 
 #This Function delete Existing Address
@@ -494,7 +488,6 @@ def DeleteAddress(request,pk):
     address = Customer_Details.objects.get(pk=pk)
     address.delete()
     return redirect('/My-address/')
-
 
 
 #  This Function Edit Existing Address.
@@ -515,7 +508,6 @@ def Edit_address(request,pk):
 
     else:
         return HttpResponseRedirect('/Login/')
-
 
 
 # This Function show User Profile.
@@ -554,7 +546,6 @@ def AboutUs(request):
         return render(request, '10.About us.html', {'AboutUsActive':'active'})
 
 
-
 # This Function for Change Password.
 def PasswordChange(request):
     if request.user.is_authenticated:
@@ -571,7 +562,6 @@ def PasswordChange(request):
         return render(request, '9.Change Password.html', {'form':fm ,'Cart_len':Cart_len})
     else:
         return HttpResponseRedirect('/Login/')
-
 
 
 # This Function for My Orders.
@@ -633,7 +623,6 @@ def Signup(request):
         return HttpResponseRedirect('/Login/')
 
 
-
 # This Function is for Login with Existing Account.
 def Login(request):
     if not request.user.is_authenticated:
@@ -654,7 +643,6 @@ def Login(request):
         return render(request,'3.Login.html', {'form':fm})
     else:
         return HttpResponseRedirect('/Profile/')
-
 
 
 # This Function Logout with Existing Account.

@@ -7,7 +7,7 @@
   <section style="background-color: whitesmoke;">
     <div class="container Ec-Checkout-section">
         {% comment %} for Buy Now {% endcomment %}
-        <form action="/Buy-now-Payment">
+        <form action="/Buy-now-Payment", id="PaymentForm">
           <div class="row">
             <div class="col-md-8 sahdow">
 
@@ -83,14 +83,10 @@
                   </table>
                 </div>
 
-              
-              {% comment %} {{Cart_Product}} {% endcomment %}
               <p class="px-2">Shipping Charges <span class="float-end">Free</span></p>
-              {% comment %} <p class="px-2">item({{Cart_qty}}) <span class="float-end">₹ {{Total_amount}}</span></p> {% endcomment %}
-                {% for Product in Product %}
-                  <strong class="px-2">Total Amount <span class="float-end px-2">₹ {{Product.Product.Selling_Price}}</span></strong>
-                {% endfor %}
+                  <strong class="px-2">Total Amount <span class="float-end px-2">₹ {{Total_amount}}</span></strong>
               <hr>
+
               <footer>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-dark w-100 mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="Continue-button">
@@ -113,8 +109,8 @@
                   </div>
                 </div>
               </footer>
-              <p class="text-muted mt-4 pt-1 mx-4">100% Secured payment and original products.</p>
             </div>
+            <p class="text-muted mt-4 pt-1 mx-4">100% Secured payment and original products.</p>
           </div>
         </form>
     </div>
@@ -136,8 +132,8 @@
     "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     "handler": function (response){
         var form = document.getElementById('PaymentForm')
-        window.location.href=`http://127.0.0.1:8000/Payment?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&signature=${response.razorpay_signature}&custid=${form.elements["custid"].value}`
-    },
+        window.location.href=`http://127.0.0.1:8000/Buy-now-Payment?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&signature=${response.razorpay_signature}&custid=${form.elements["custid"].value}`
+    },  
     "prefill": {
       "name": "Raza Fragrances",
       "email": "owesmansuri50@gmail.com",
@@ -152,13 +148,7 @@
   };
   var rzp1 = new Razorpay(options);
   rzp1.on('payment.failed', function (response){
-    alert(response.error.code);
-    alert(response.error.description);
-    alert(response.error.source);
-    alert(response.error.step);
-    alert(response.error.reason);
-    alert(response.error.metadata.order_id);
-    alert(response.error.metadata.payment_id);
+    window.location.href = "{% url "OrderNotPlaced" %}"
   });
   document.getElementById('rzp-button1').onclick = function(e){
       rzp1.open();
