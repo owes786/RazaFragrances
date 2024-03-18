@@ -77,6 +77,7 @@ class MyPasswordResetForm(PasswordResetForm):
     email = forms.CharField(label='' ,max_length = 250, widget=forms.TextInput(attrs={'class':'Ec-input', 'placeholder':'Email address'}))
 
 
+# for Reset password.
 class MySetPasswordForm(SetPasswordForm):
-    new_password1 = forms.CharField(label='', max_length=250, widget=forms.PasswordInput(attrs={'class':'Ec-input mb-5', 'placeholder':'Password'}))
-    new_password2 = forms.CharField(label='', max_length=250, widget=forms.PasswordInput(attrs={'class':'Ec-input mb-3', 'placeholder':'Confirm Password'}))
+    new_password1 = forms.CharField(label='', max_length=250, widget=forms.PasswordInput(attrs={'class':'Ec-input', 'placeholder':'Password'}))
+    new_password2 = forms.CharField(label='', max_length=250, widget=forms.PasswordInput(attrs={'class':'Ec-input', 'placeholder':'Confirm Password'}))
