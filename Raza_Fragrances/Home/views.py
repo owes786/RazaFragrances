@@ -1,7 +1,7 @@
 from django.shortcuts import render,HttpResponseRedirect, redirect
 from django.views import View
 from .models import Product, Review ,OrderDetails, Customer_Details, Cart , Wishlist, Buy_now_model
-from .forms import signupForm, loginForm, NewAddress ,ChangePassword, Review_Form, User_Profile
+from .forms import signupForm, loginForm, NewAddress ,ChangePassword, User_Profile
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 from django.db.models import Q
@@ -459,6 +459,7 @@ def EmptyCart(request):
 # This Function show profile page.
 def Profile(request):
     if request.user.is_authenticated:
+        Cart_len = len(Cart.objects.filter(user = request.user))
         if request.method == "POST":
             fm = User_Profile(request.POST, instance = request.user)
             if fm.is_valid():
@@ -466,7 +467,6 @@ def Profile(request):
                 messages.success(request, "Profile Updated Successfully!!")
         else:
             fm = User_Profile(instance = request.user)
-        Cart_len = len(Cart.objects.filter(user = request.user))
         return render(request, '006.Profile.html', {'form':fm ,'ProfileActive':"btn-dark" ,'Cart_len':Cart_len})
     else:
         return HttpResponseRedirect('/Login/')

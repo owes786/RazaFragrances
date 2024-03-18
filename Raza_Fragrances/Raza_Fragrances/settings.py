@@ -136,3 +136,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 RAZORPAY_KEY_ID = 'rzp_test_QVrqs1qavlFIRL'
 RAZORPAY_SECRET_ID = 'dUv1jZ2OnmTwXiNE1HBng1V1'
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
