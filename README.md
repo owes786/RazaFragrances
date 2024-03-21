@@ -1,1 +1,1 @@
-A full working E-commerce Fragrance website.
+E-commerce website to sell Fragrances online.
