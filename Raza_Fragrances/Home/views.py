@@ -13,9 +13,9 @@ from django.conf import settings
 # This Functin show Products on Home Page.
 class HomeProductView(View):
     def get(self, request):
-        Attar = Product.objects.order_by('?').filter(Category = 'Attar').filter(Stock = 'in stock')
-        Perfume = Product.objects.order_by('?').filter(Category = "Perfume").filter(Stock = 'in stock')
-        Deodent = Product.objects.order_by('?').filter(Category = 'Deodent').filter(Stock = 'in stock')
+        Attar = Product.objects.order_by('?').filter(Category = 'Attar')
+        Perfume = Product.objects.order_by('?').filter(Category = "Perfume")
+        Deodent = Product.objects.order_by('?').filter(Category = 'Deodent')
         Fragrances = Product.objects.all()
         if request.user.is_authenticated:
             Cart_len = len(Cart.objects.filter(user = request.user))

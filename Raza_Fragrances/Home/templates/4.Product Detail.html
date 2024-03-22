@@ -8,20 +8,24 @@
     <div class="container Ec-ProductDetailContainer">
         <div class="row">
           <div class="col-md-5 text-center border-end"> 
-            <img class="img-fluid Ec-ProductImage" src="{{product.Product_Image.url}}" alt="">
+            {% if product.Stock == "out of stock" %}
+              <P class="z-2 position-absolute alert-danger p-1 px-2">Out of Stock</P>
+            {% endif %}
+            <img class="img-fluid Ec-ProductImage" src="{{product.Product_Image.url}}" alt=""> {% comment %} Product image {% endcomment %}
 
             {% comment %} To Check is Product already in wishlist or not  {% endcomment %}
             {% if request.user.is_authenticated %}
               {% if Already_in_Wishlist %}
-                <a href="{% url "RemoveWishlistItem" product.id %}"><img class="img-fluid btn pt-2 Ec-Wishlist-icon" src="{% static "images/heart (1).png" %}" alt=""></a>
+              <a href="{% url "RemoveWishlistItem" product.id %}"><img class="img-fluid btn pt-2 Ec-Wishlist-icon" src="{% static "images/heart (1).png" %}" alt="">
+              </a>
               {% else %}
-                <a href="{% url "MoveToWishlist" product.id %}"><img class="img-fluid btn pt-2 Ec-Wishlist-icon" src="{% static "images/heart.png" %}" alt=""></a>
+              <a href="{% url "MoveToWishlist" product.id %}"><img class="img-fluid btn pt-2 Ec-Wishlist-icon" src="{% static "images/heart.png" %}" alt=""></a>
               {% endif %}
             {% endif %}
-
-          </div>
-          <div class="col-md-7">
-            <div class="Ec-Products">
+              
+            </div>
+            <div class="col-md-7">
+              <div class="Ec-Products">
                 <p class="Ec-ProductTitle">{{product.Title}}</p>
                 <p class="Ec-Brand-Text" >Brand : {{product.Brand}}</p>
                 <p class="Ec-ProductPrice d-inline">Price : ₹{{product.Selling_Price}}</p>
@@ -34,18 +38,23 @@
 
                 {% comment %} To Check Product already in Cart or not {% endcomment %}
                 {% if request.user.is_authenticated %}
-                  {% if Already_in_Cart %}
-                    <a href="{% url "Cart" %}" class="btn btn-secondary Ec-button">GO TO CART</a>
-                    {% else %}
-                    <form action="/Add-to-Cart" class="d-inline">
-                      <input type="hidden" name="Product_id" value={{product.id}}>
-                      <button type="submit" class="btn btn-dark Ec-button">ADD TO CART</button>
-                    </form>
-                    {% endif %}
-                    <form action="/Buy-now" class="d-inline">
-                      <input type="hidden" name="Prod_id" value={{product.id}}>
-                      <button type="submit" class="btn btn-dark d-inline Ec-button">BUY NOW</button>
-                    </form>
+                  {% if product.Stock == "out of stock" %}
+                    <button class="btn btn-dark disabled Ec-button">ADD TO CART</button>
+                    <button class="btn btn-dark disabled Ec-button">BUY NOW</button>
+                  {% else %}
+                    {% if Already_in_Cart %}
+                      <a href="{% url "Cart" %}" class="btn btn-secondary Ec-button">GO TO CART</a>
+                      {% else %}
+                      <form action="/Add-to-Cart" class="d-inline">
+                        <input type="hidden" name="Product_id" value={{product.id}}>
+                        <button type="submit" class="btn btn-dark Ec-button">ADD TO CART</button>
+                      </form>
+                      {% endif %}
+                      <form action="/Buy-now" class="d-inline">
+                        <input type="hidden" name="Prod_id" value={{product.id}}>
+                        <button type="submit" class="btn btn-dark d-inline Ec-button">BUY NOW</button>
+                      </form>
+                  {% endif %}
                 {% endif %}
               
               </div>
