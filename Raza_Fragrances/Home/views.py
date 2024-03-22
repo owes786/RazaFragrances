@@ -1,7 +1,7 @@
 from django.shortcuts import render,HttpResponseRedirect, redirect
 from django.views import View
 from .models import Product, Review ,OrderDetails, Customer_Details, Cart , Wishlist, Buy_now_model
-from .forms import signupForm, loginForm, NewAddress ,ChangePassword, User_Profile
+from .forms import signupForm, loginForm, NewAddress ,ChangePassword, User_Profile, Review_Form
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 from django.db.models import Q

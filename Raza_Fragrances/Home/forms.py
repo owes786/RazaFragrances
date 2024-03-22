@@ -72,6 +72,15 @@ class ChangePassword(PasswordChangeForm):
     new_password2 = forms.CharField(label='', widget=forms.PasswordInput(attrs={'class':'pb-2' ,'placeholder':'New Password (Confirmation)'}), error_messages={'required':"Please confirm new password."})
 
 
+# This is for Review Textarea
+class Review_Form(forms.ModelForm):
+    Review_Description = forms.CharField(widget=forms.Textarea(attrs={'class':'Ec-Review-Textarea w-100 mt-3' ,'placeholder': 'Write Review', 'autofocus':True}), error_messages={'required':"Please Write Your Review!"})
+
+    class Meta:
+        model = Review
+        fields = ['Review_Description','image']
+
+
 # This if for Reset password
 class MyPasswordResetForm(PasswordResetForm):
     email = forms.CharField(label='' ,max_length = 250, widget=forms.TextInput(attrs={'class':'Ec-input', 'placeholder':'Email address'}))
