@@ -22,7 +22,7 @@
 
                 
                   {% for address in Cust_address %}            
-                    <div class="shadow-sm bg-transparent mb-2">
+                    <div class="shadow-sm bg-transparent">
                       <div class="card-body">
                         <strong class="d-inline">{{address.Name}}</strong>
                           
@@ -37,7 +37,7 @@
                       </div>
 
                     </div>
-                    <hr>
+                    <br>
                   {% endfor %}
                 {% else %}
                     {% if messages %}

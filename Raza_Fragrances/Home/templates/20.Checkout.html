@@ -24,7 +24,7 @@
 
               
                 {% for address in Cust_address %}            
-                  <div class="shadow-sm bg-transparent mb-2">
+                  <div class="shadow-sm bg-transparent">
                     <div class="card-body">
                       <strong class="d-inline">{{address.Name}}</strong>
                       <div class="form-check mx-2 mb-2 d-inline float-end" style="cursor: pointer;">
@@ -37,7 +37,7 @@
                       <p>Landmark : {{address.Landmark}}</p>
                     </div>
                   </div>
-                  <hr>
+                  <br>
                 {% endfor %}
               {% else %}
                   {% if messages %}
